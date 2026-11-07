@@ -1,0 +1,20 @@
+{
+  "name": "vvv-claude-kit",
+  "owner": {
+    "name": "Vadim Vinokurov",
+    "url": "https://github.com/vadimvinokurov"
+  },
+  "metadata": {
+    "description": "Personal collection of skills and hooks for Claude Code",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "vvv-claude-kit",
+      "source": "./",
+      "description": "Skills, hooks and workflow rules the author uses in day-to-day Claude Code work.",
+      "category": "productivity",
+      "tags": ["skills", "hooks", "testing", "workflow"]
+    }
+  ]
+}

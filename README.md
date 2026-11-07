@@ -14,6 +14,8 @@ then in `/plugins` install **vvv-claude-kit** (or with the command):
 /plugin install vvv-claude-kit@vvv-claude-kit
 ```
 
+Installing the plugin also installs its dependency — the **superpowers** plugin from the official `claude-plugins-official` marketplace.
+
 ## Updating
 
 The plugin version lives in `.claude-plugin/plugin.json`; after a push — if you installed it, `/plugins` shows an **Update** button for the marketplace.

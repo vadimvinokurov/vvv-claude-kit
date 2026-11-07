@@ -14,7 +14,10 @@ then in `/plugins` install **vvv-claude-kit** (or with the command):
 /plugin install vvv-claude-kit@vvv-claude-kit
 ```
 
-Installing the plugin also installs its dependency — the **superpowers** plugin from the official `claude-plugins-official` marketplace.
+Installing the plugin also installs its dependencies from the official `claude-plugins-official` marketplace:
+
+- **superpowers** — disciplined skill-driven workflow
+- **context7** — up-to-date library documentation lookup (MCP)
 
 ## Updating
 

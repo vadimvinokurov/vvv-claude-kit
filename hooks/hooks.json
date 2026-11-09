@@ -1,5 +1,15 @@
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/common_agent_rules.md\""
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Read|Grep|Glob|Write|Edit|Bash",

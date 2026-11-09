@@ -33,6 +33,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 
 | Hook | Purpose |
 |---|---|
+| `load-agent-rules` | SessionStart hook that injects the plugin's agent rules (`common_agent_rules.md`) into the session context on startup. |
 | `protect-secrets` | PreToolUse hook that denies agent access to secrets: `.env` and `.env.*`, `*.pem`, `*.key`, and the `.secrets`/`.secret` folders — no reading, editing, or browsing them (including via Bash such as `cat .env`), and no staging or committing them with git. Files ending in `.example` / `.template` (e.g. `.env.example`) stay allowed. The git check looks at the real index, so a commit message that merely mentions `.env` is fine. |
 
 ## Structure
@@ -41,7 +42,9 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 .claude-plugin/marketplace.json   # marketplace manifest
 .claude-plugin/plugin.json        # plugin manifest (version lives here)
 skills/                           # skills (auto-discovered)
-hooks/hooks.json                  # PreToolUse hook registration (auto-registered)
+hooks/hooks.json                  # SessionStart + PreToolUse hook registration (auto-registered)
 scripts/protect-secrets.py        # the secrets-protection hook script
-tests/test_protect_secrets.py     # hook tests (python3 tests/test_protect_secrets.py)
+common_agent_rules.md             # agent rules injected into context at session start (load-agent-rules)
+tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
+tests/test_rules_hook.py          # rules-hook wiring tests (python3 tests/test_rules_hook.py)
 ```

@@ -97,17 +97,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 9. Languages
-
-- **Research in English, always.** Any web search, documentation lookup, or browsing an agent does must be done with English queries, even if the user's request sounds different.
-- **Everything else in English**: code, identifiers, comments, commit messages, test names, CI configuration, issue/PR labels and templates.
-- **Talk to the user in Russian.**
-- **Long-lived project docs in Russian**: README, PROJECT.md, PROJECT_CONCEPT.md, and every .md under docs/ (design docs, specs, changelogs written by agents) are written and edited in Russian.
-- **No tables in prose.** When writing markdown documents, comments, or any other prose, do not use tables unless the user explicitly asked for one.
-
----
-
-## 10. When to ask, when to proceed
+## 9. When to ask, when to proceed
 
 **Ask before proceeding when:**
 - The request has two plausible interpretations and the choice materially affects the output.

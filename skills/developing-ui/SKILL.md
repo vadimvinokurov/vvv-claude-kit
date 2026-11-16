@@ -15,6 +15,29 @@ Before writing any control or screen from scratch:
 - **Ready-made before hand-written**: a standard control (button, input, select, dialog, table, toast) comes from the component library or framework primitives. Hand-rolling is justified only when no ready element covers the case — and then it should visually sit inside the existing system.
 - **Check the library before guessing APIs**: use context7 (or the component docs) for the actual props/variants — do not invent component APIs.
 - **Tokens, not values**: colors, spacing, radii, font sizes come from the project's existing variables/scale (CSS vars, theme, design tokens). If none exist, define one small scale up front (spacing 4/8/16/32, one font stack, 2–3 colors + one accent) and stick to it — do not invent ad-hoc values per screen. When the `ui-ux-pro-max` plugin is installed, generate the missing token base with its design-system output (MASTER.md + DTCG/CSS variables) instead of inventing it by hand.
+- **Blocks and templates before from-scratch composition**: for a standard screen (login, dashboard, settings, form), look first in the "Where to look" section below and adapt a ready block; if the block's format doesn't fit the project (e.g. a Tailwind block in a plain-CSS project, a Slint gallery for an egui app), use it as a live reference — open the sample page, screenshot it as the target direction, reproduce it with the project's components. Inventing a standard screen from an empty file is the last resort.
+
+## Where to look for ready-made
+
+Web and Tauri (webview):
+
+| Source | URL | What |
+|---|---|---|
+| shadcn/ui blocks | https://ui.shadcn.com/blocks | Login, dashboard, sidebar compositions; `npx shadcn add <block>`, free |
+| Bootstrap examples | https://getbootstrap.com/docs/5.3/examples/ | Whole pages: dashboards, checkout, pricing, sign-in |
+| Flowbite blocks | https://flowbite.com/blocks/ | Sections: hero, forms, tables, navigation (HTML + Tailwind) |
+| daisyUI components | https://daisyui.com/components/ | ~68 ready components, open source |
+| MUI templates | https://mui.com/material-ui/getting-started/templates/ | Ready pages for React stacks |
+| Ant Design Pro | https://pro.ant.design | Enterprise dashboard patterns |
+| Tailwind Plus (ex-Tailwind UI) | https://tailwindcss.com/plus | Professionally designed blocks — paid, only if the project already licenses it |
+
+Rust GUI:
+
+| Source | URL | What |
+|---|---|---|
+| egui examples | https://github.com/emilk/egui/tree/main/examples | file_dialog, images, multiple_viewports, screenshot, … |
+| Slint demos | https://slint.dev/demos | Weather/Energy/Printer demos + widget galleries in Material and Fluent design |
+| iced examples | https://github.com/iced-rs/iced/tree/master/examples | tour, todos, styling (light/dark), clock, … |
 
 ## 2. Composition and layout rules
 

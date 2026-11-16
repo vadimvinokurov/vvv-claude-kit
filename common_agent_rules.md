@@ -75,9 +75,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ## 6. Develop Only Testable Applications
 
-**When developing any application (new app, new feature, or refactoring), you MUST explicitly invoke and follow the `/building-testable-apps` skill.**
+**When developing any new application, module, or feature, you MUST explicitly invoke and follow the `/building-testable-apps` skill.**
 
 - Every module is developed test-first (RED → GREEN → REFACTOR).
+- On refactoring, fixing, or modifying **existing** code, the skill is invoked only if you explicitly ask to apply it.
+- The skill never rewrites existing code to conform to its rules unless you explicitly request that rewrite.
 
 ---
 

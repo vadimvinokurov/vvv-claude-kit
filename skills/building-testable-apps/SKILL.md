@@ -1,6 +1,6 @@
 ---
 name: building-testable-apps
-description: Use when starting any application development (new app, new feature in an app, architectural refactor) — user rule: every app under development must follow these seven headless-development rules (usually required in the project CLAUDE.md). Triggers: "create an app", "add a feature", "write a CLI/Tkinter/web app", "build a game/utility/service".
+description: Use when developing any new application, module, or feature — user rule: every app under development must follow these seven headless-development rules (usually required in the project CLAUDE.md). Does NOT trigger for refactoring, fixing, or modifying existing code unless the user explicitly asks to apply this skill; existing code is never rewritten to conform to these rules unless the user explicitly requests it. Triggers: "create an app", "add a feature", "new module", "write a CLI/Tkinter/web app", "build a game/utility/service".
 ---
 
 # Building Testable Apps — 7 Rules of Headless Development
@@ -8,6 +8,10 @@ description: Use when starting any application development (new app, new feature
 **Core idea:** an app = a pure library + auto-generated UI. The agent can verify any feature by invoking a command, with no screen.
 
 A feature is **not done** until all seven rules below pass. This is discipline, not a recommendation.
+
+## Scope — new code only
+
+These rules govern code that is written **new**: a new app, a new module, a new feature. If the task is to refactor, fix, or modify existing code, this skill applies only when the user explicitly asked to apply it — and even when it applies, existing code is not rewritten to conform to these rules unless the user explicitly requested that rewrite. New code added inside an existing system follows the rules; the surrounding legacy code is left as is.
 
 ## The seven rules (acceptance checklist)
 

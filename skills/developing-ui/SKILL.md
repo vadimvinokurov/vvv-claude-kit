@@ -56,7 +56,7 @@ For the *look* (typography, palette, personality), invoke `frontend-design:front
 
 A UI change is **not done** until the changed UI has been **run, seen, and driven** in a real or headless runtime, and its console/runtime logs read:
 
-1. **Run** — the real thing: dev/static server for web; the app binary or test harness for a native GUI.
+1. **Run** — the real thing: dev/static server for web; the app binary or test harness for a native GUI. **Headless when possible**: prefer headless mode for every UI check — headless Chromium (Playwright's default) for web/Tauri, offscreen rendering or `egui_kittest` (headless harness) for native. Headless gives the same evidence (screenshots, accessibility snapshots, clicks, logs) without a display; fall back to a visible window only for checks headless can't cover.
 2. **See** — an image or accessibility snapshot of the actual rendered UI, whole window first:
    - Web / Tauri (webview): Playwright MCP — `browser_navigate` to the server URL → `browser_take_screenshot` (full page). If the MCP server is unavailable in the environment, substitute an equivalent tool with the same evidence: a minimal Playwright (Node/Python) script driving headless Chromium, or `chrome --headless --screenshot` — same loop, same artifacts.
    - egui: `egui_kittest` — harness snapshot returns both the image and an AccessKit snapshot of the whole UI.

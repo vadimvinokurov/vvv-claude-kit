@@ -73,28 +73,14 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 6. Develop Only Testable Applications
-
-**When developing any new application, module, or feature, you MUST explicitly invoke and follow the `/building-testable-apps` skill.**
-
-- Every module is developed test-first (RED → GREEN → REFACTOR) — the `/superpowers:test-driven-development` cycle applies to ALL code including bugfixes in existing code.
-
----
-
-## 7. UI Development
-
-**When building or modifying any user interface, you MUST invoke and follow the `/developing-ui` skill.**
-
----
-
-## 8. Commits
+## 6. Commits
 
 - Write descriptive commit messages (subject under 72 chars, body explains the why). No "update file" or "fix bug" commits.
 - No "Co-Authored-By: Claude" attribution unless the project explicitly wants it.
 
 ---
 
-## 9. Communication style
+## 7. Communication style
 
 - Start with the answer or the action. No openers like "Great question", "You're absolutely right", "Excellent idea", "I'd be happy to".
 - Direct, not diplomatic. "This won't scale because X" beats "That's an interesting approach, but have you considered...".
@@ -103,7 +89,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 10. When to ask, when to proceed
+## 8. When to ask, when to proceed
 
 **Ask before proceeding when:**
 - The request has two plausible interpretations and the choice materially affects the output.

@@ -31,12 +31,13 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
 | `developing-ui` | The whole UI path for web, Tauri and native GUIs: reuse existing components and tokens first, one layout system, deliberate aesthetics (via frontend-design), then the run-see-drive loop — screenshot/snapshot, interact, read logs — before it counts as done. Triggers on building or modifying any UI. |
+| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to this plugin's skills (building-testable-apps, TDD for all code, developing-ui). Injected at session start; not meant to trigger by description. |
 
 ## Hooks
 
 | Hook | Purpose |
 |---|---|
-| `load-agent-rules` | SessionStart hook that injects the plugin's agent rules (`common_agent_rules.md`) into the session context on startup. |
+| `load-agent-rules` | SessionStart hook that injects the plugin's agent rules (`common_agent_rules.md`) and the `using-skills` skill mandate into the session context on startup. |
 | `protect-secrets` | PreToolUse hook that denies agent access to secrets: `.env` and `.env.*`, `*.pem`, `*.key`, and the `.secrets`/`.secret` folders — no reading, editing, or browsing them (including via Bash such as `cat .env`), and no staging or committing them with git. Files ending in `.example` / `.template` (e.g. `.env.example`) stay allowed. The git check looks at the real index, so a commit message that merely mentions `.env` is fine. |
 
 ## Structure
@@ -51,4 +52,5 @@ common_agent_rules.md             # agent rules injected into context at session
 tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
 tests/test_rules_hook.py          # rules-hook wiring tests (python3 tests/test_rules_hook.py)
 tests/test_developing_ui_skill.py # developing-ui skill wiring tests (python3 tests/test_developing_ui_skill.py)
+tests/test_using_skills_hook.py   # using-skills injection wiring tests (python3 tests/test_using_skills_hook.py)
 ```

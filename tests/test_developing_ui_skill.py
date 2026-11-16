@@ -1,14 +1,14 @@
-"""Wiring tests for the developing-ui skill (plugin rule 7).
+"""Wiring tests for the developing-ui skill.
 
-The agent rules reference the /developing-ui skill; the skill must exist
-in the plugin with the expected contents.
+The using-skills SessionStart injection hard-routes /developing-ui (see
+tests/test_using_skills_hook.py); the skill itself must exist in the
+plugin with the expected contents.
 """
 
 import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-RULES_FILE = REPO / "common_agent_rules.md"
 SKILL_FILE = REPO / "skills" / "developing-ui" / "SKILL.md"
 
 
@@ -25,12 +25,12 @@ class DevelopingUiSkillTests(unittest.TestCase):
         self.assertIn("name: developing-ui", text)
         self.assertIn("description:", text)
 
-    def test_rules_reference_the_skill(self):
-        if not RULES_FILE.exists():
-            self.skipTest("rules file missing")
-        text = RULES_FILE.read_text()
-        self.assertIn("/developing-ui", text, "rules do not reference /developing-ui")
-        self.assertNotIn("/ui-verify-loop", text, "stale /ui-verify-loop reference")
+    def test_skill_frontmatter_triggers_on_ui_requests(self):
+        if not SKILL_FILE.exists():
+            self.skipTest("skill file missing")
+        text = SKILL_FILE.read_text()
+        self.assertIn("description:", text)
+        self.assertIn("UI", text)
 
 
 if __name__ == "__main__":

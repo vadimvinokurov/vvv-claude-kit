@@ -1,4 +1,4 @@
-"""Wiring tests for the developing-ui skill (plugin rule 8).
+"""Wiring tests for the developing-ui skill (plugin rule 7).
 
 The agent rules reference the /developing-ui skill; the skill must exist
 in the plugin with the expected contents.

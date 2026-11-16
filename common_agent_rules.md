@@ -78,38 +78,23 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 **When developing any new application, module, or feature, you MUST explicitly invoke and follow the `/building-testable-apps` skill.**
 
 - Every module is developed test-first (RED → GREEN → REFACTOR) — the `/superpowers:test-driven-development` cycle applies to ALL code including bugfixes in existing code.
-- On refactoring, fixing, or modifying **existing** code, the skill is invoked only if you explicitly ask to apply it.
-- The skill never rewrites existing code to conform to its rules unless you explicitly request that rewrite.
 
 ---
 
-## 7. UI Design
+## 7. UI Development
 
-**When building any user interface, you MUST first explicitly invoke and follow the `/frontend-design:frontend-design` skill.**
-
-- Applies when creating a new UI, or substantially reshaping or restyling an existing one.
-- The skill drives aesthetic direction, typography, and visual choices — follow it before writing UI code.
+**When building or modifying any user interface, you MUST invoke and follow the `/developing-ui` skill.**
 
 ---
 
-## 8. UI Development
-
-**When building or modifying any UI, you MUST invoke and follow the `/developing-ui` skill.**
-
-- It governs the whole path: reuse existing components and design tokens first, one consistent layout system, deliberate aesthetics (via `/frontend-design:frontend-design`), then the run-see-drive verification loop with logs read.
-- Applies to every UI change: web pages, web apps, Tauri, native GUIs (egui, Slint, iced) — new screens, controls, style/layout changes, bug fixes.
-- "Compiles", "typecheck passed", "the code looks right" do not count as verification; if nothing can run or render it, the result is reported as verifiably unfinished — never silently claimed done.
-
----
-
-## 9. Commits
+## 8. Commits
 
 - Write descriptive commit messages (subject under 72 chars, body explains the why). No "update file" or "fix bug" commits.
 - No "Co-Authored-By: Claude" attribution unless the project explicitly wants it.
 
 ---
 
-## 10. Communication style
+## 9. Communication style
 
 - Start with the answer or the action. No openers like "Great question", "You're absolutely right", "Excellent idea", "I'd be happy to".
 - Direct, not diplomatic. "This won't scale because X" beats "That's an interesting approach, but have you considered...".
@@ -118,7 +103,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 11. When to ask, when to proceed
+## 10. When to ask, when to proceed
 
 **Ask before proceeding when:**
 - The request has two plausible interpretations and the choice materially affects the output.

@@ -60,7 +60,7 @@ A UI change is **not done** until the changed UI has been **run, seen, and drive
 2. **See** — an image or accessibility snapshot of the actual rendered UI, whole window first:
    - Web / Tauri (webview): Playwright MCP — `browser_navigate` to the server URL → `browser_take_screenshot` (full page). If the MCP server is unavailable in the environment, substitute an equivalent tool with the same evidence: a minimal Playwright (Node/Python) script driving headless Chromium, or `chrome --headless --screenshot` — same loop, same artifacts.
    - egui: `egui_kittest` — harness snapshot returns both the image and an AccessKit snapshot of the whole UI.
-   - Any app that can render itself into a buffer on command: that buffer (see `building-testable-apps` rule 6).
+   - Any app that can render itself into a buffer on command: that buffer — rendered offscreen by the app's own renderer through its control channel, not a capture of the physical screen.
    - Nothing of the above is possible? The work stays **verifiably unfinished**: say so explicitly and list what could not be checked. It does not silently become "done".
 3. **Drive** — exercise the interactive paths you changed or added: click, submit, type, resize smaller (Playwright MCP: `browser_click`, `browser_type`, `browser_resize`; egui: kittest queries and clicks).
 4. **Read the logs** — browser console: `browser_console_messages`; native: app stdout/stderr, framework warnings, panics. Zero errors is the bar.
@@ -77,7 +77,7 @@ Per-stack quick reference:
 | Web page/app | static or dev server | Playwright MCP: navigate + screenshot | browser_click / browser_type / browser_resize | browser_console_messages |
 | Tauri | `tauri dev` → localhost URL | same as web (on the dev server URL) | same as web | browser_console_messages + app stdout |
 | egui | app binary or egui_kittest harness | egui_kittest snapshot (image + AccessKit snapshot) | kittest queries / clicks | stdout/stderr, panics |
-| Slint / others | app binary | building-testable-apps rule-6 buffer render; framework tooling where it exists | framework tooling | stdout/stderr |
+| Slint / others | app binary | offscreen render into a buffer via the app's own control channel; framework tooling where it exists | framework tooling | stdout/stderr |
 
 ## Red flags
 

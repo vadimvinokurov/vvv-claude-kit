@@ -92,14 +92,24 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 8. Commits
+## 8. UI Development
+
+**When building or modifying any UI, you MUST invoke and follow the `/developing-ui` skill.**
+
+- It governs the whole path: reuse existing components and design tokens first, one consistent layout system, deliberate aesthetics (via `/frontend-design:frontend-design`), then the run-see-drive verification loop with logs read.
+- Applies to every UI change: web pages, web apps, Tauri, native GUIs (egui, Slint, iced) — new screens, controls, style/layout changes, bug fixes.
+- "Compiles", "typecheck passed", "the code looks right" do not count as verification; if nothing can run or render it, the result is reported as verifiably unfinished — never silently claimed done.
+
+---
+
+## 9. Commits
 
 - Write descriptive commit messages (subject under 72 chars, body explains the why). No "update file" or "fix bug" commits.
 - No "Co-Authored-By: Claude" attribution unless the project explicitly wants it.
 
 ---
 
-## 9. Communication style
+## 10. Communication style
 
 - Start with the answer or the action. No openers like "Great question", "You're absolutely right", "Excellent idea", "I'd be happy to".
 - Direct, not diplomatic. "This won't scale because X" beats "That's an interesting approach, but have you considered...".
@@ -108,7 +118,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 10. When to ask, when to proceed
+## 11. When to ask, when to proceed
 
 **Ask before proceeding when:**
 - The request has two plausible interpretations and the choice materially affects the output.

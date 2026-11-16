@@ -19,6 +19,7 @@ Installing the plugin also installs its dependencies from the official `claude-p
 - **superpowers** — disciplined skill-driven workflow
 - **context7** — up-to-date library documentation lookup (MCP)
 - **frontend-design** — visual design guidance for UI/UX implementation
+- **ui-ux-pro-max** — searchable design intelligence: styles, palettes, font pairings, UX guidelines (own marketplace `ui-ux-pro-max-skill`)
 
 ## Updating
 
@@ -29,6 +30,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 | Skill | Purpose |
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
+| `developing-ui` | The whole UI path for web, Tauri and native GUIs: reuse existing components and tokens first, one layout system, deliberate aesthetics (via frontend-design), then the run-see-drive loop — screenshot/snapshot, interact, read logs — before it counts as done. Triggers on building or modifying any UI. |
 
 ## Hooks
 
@@ -48,4 +50,5 @@ scripts/protect-secrets.py        # the secrets-protection hook script
 common_agent_rules.md             # agent rules injected into context at session start (load-agent-rules)
 tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
 tests/test_rules_hook.py          # rules-hook wiring tests (python3 tests/test_rules_hook.py)
+tests/test_developing_ui_skill.py # developing-ui skill wiring tests (python3 tests/test_developing_ui_skill.py)
 ```

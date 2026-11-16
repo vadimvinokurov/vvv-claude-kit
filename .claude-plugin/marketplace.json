@@ -8,7 +8,7 @@
     "description": "Personal collection of skills and hooks for Claude Code",
     "version": "0.2.0"
   },
-  "allowCrossMarketplaceDependenciesOn": ["claude-plugins-official"],
+  "allowCrossMarketplaceDependenciesOn": ["claude-plugins-official", "ui-ux-pro-max-skill"],
   "plugins": [
     {
       "name": "vvv-claude-kit",

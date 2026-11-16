@@ -18,6 +18,7 @@ Installing the plugin also installs its dependencies from the official `claude-p
 
 - **superpowers** — disciplined skill-driven workflow
 - **context7** — up-to-date library documentation lookup (MCP)
+- **frontend-design** — visual design guidance for UI/UX implementation
 
 ## Updating
 

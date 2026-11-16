@@ -83,14 +83,23 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 7. Commits
+## 7. UI Design
+
+**When building any user interface, you MUST first explicitly invoke and follow the `/frontend-design:frontend-design` skill.**
+
+- Applies when creating a new UI, or substantially reshaping or restyling an existing one.
+- The skill drives aesthetic direction, typography, and visual choices — follow it before writing UI code.
+
+---
+
+## 8. Commits
 
 - Write descriptive commit messages (subject under 72 chars, body explains the why). No "update file" or "fix bug" commits.
 - No "Co-Authored-By: Claude" attribution unless the project explicitly wants it.
 
 ---
 
-## 8. Communication style
+## 9. Communication style
 
 - Start with the answer or the action. No openers like "Great question", "You're absolutely right", "Excellent idea", "I'd be happy to".
 - Direct, not diplomatic. "This won't scale because X" beats "That's an interesting approach, but have you considered...".
@@ -99,7 +108,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
-## 9. When to ask, when to proceed
+## 10. When to ask, when to proceed
 
 **Ask before proceeding when:**
 - The request has two plausible interpretations and the choice materially affects the output.

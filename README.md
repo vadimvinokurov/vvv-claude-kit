@@ -18,6 +18,8 @@ Installing the plugin also installs its dependencies from the official `claude-p
 
 - **superpowers** — disciplined skill-driven workflow
 - **context7** — up-to-date library documentation lookup (MCP)
+- **frontend-design**, **ui-ux-pro-max**, **example-skills** (webapp-testing), **interface-design** — UI stack driven by the `ui-development` skill
+- [web-design-guidelines](https://github.com/vercel-labs/agent-skills) — pre-ship web audit; not a plugin dependency, install with `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`
 
 ## Updating
 
@@ -29,7 +31,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
 | `common-rules` | The operating rules for every session: never fabricate, think before coding, simplicity first, surgical changes, goal-driven execution, commit conventions, direct communication style, when to ask versus proceed. Routed from `using-skills` at the start of every conversation. |
-| `ui-development` | Guidance for any UI task — web pages, web apps, and native GUIs: compose from existing components first, build the layout system before styling, style deliberately with tokens, then verify by running the app and seeing the rendered result (run → see → drive). Quality states (loading/empty/error) and red flags included. Routed from `using-skills` on any UI work. |
+| `ui-development` | Coordinator for any UI task — web and native GUIs: dispatches to the ready UI skills (frontend-design for taste, ui-ux-pro-max for style references, webapp-testing for web verification, interface-design for decision memory, web-design-guidelines for the pre-ship audit), runs the four-stage process (compose → layout → style → verify run/see/drive), and personally owns what the ready skills don't cover: desktop GUIs, quality states (loading/empty/error), the verification loop. Routed from `using-skills` on any UI work. |
 | `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, ui-development for any UI task, TDD for all code). Injected at session start; not meant to trigger by description. |
 
 ## Hooks

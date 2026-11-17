@@ -28,6 +28,16 @@ Two hard rules:
 
 Scope note: every skill in the table is web-centric. Native desktop GUIs (Tkinter, egui, Slint, iced, Qt, Tauri) are covered only by the stages below — that's why this skill exists.
 
+## Choosing a stack: desktop framework = agent-testable first
+
+When the desktop framework is not already fixed by the project, pick it by one criterion before all others: **can an agent see and drive this UI?** A framework whose UI cannot be verified programmatically forces the "written but not seen" mode on every change — reject it for greenfield work.
+
+- **Prefer web-layer GUIs, e.g. Tauri** — the UI is a web app, so `webapp-testing` and browser tooling see it, click it, and log it. Full e2e via the WebDriver protocol (macOS desktop WebDriver is limited; the web layer remains verifiable everywhere).
+- **egui** — ships the official `egui_kittest` harness: drives the UI by accessibility tree (`get_by_label`, clicks, state assertions), no pixels needed. Combine with screenshots for how it *looks*.
+- **Any other toolkit (Tkinter, Slint, iced, Qt)** — only when the project already uses it or the user picks it. Before committing, check what automation it offers an agent (accessibility tree, scripted input, headless capture); absent that, every change degrades to run + screenshot + honest "written but not seen" for interaction.
+
+This pairs with the headless-development rule in `building-testable-apps`: verifiable core, UI on top — and the UI, too, should be chosen verifiable.
+
 ## The four stages, in order
 
 Each stage consumes the output of the previous one. Skipping a stage does not save time — it moves the rework to the end, where it costs more.
@@ -72,7 +82,7 @@ What remains this skill's own — because it is platform-agnostic and the ready 
 2. **See** — screenshot the rendered result, compare against the stage-3 intent and, for fixes, against how it looked before.
 3. **Drive** — exercise the changed parts: click, submit, resize, toggle theme. Check the states the user will hit, not just the happy path.
 
-On web, route this through `webapp-testing` (Playwright: open, screenshot, click through flows, read logs). On desktop, run the app, capture the window, interact or drive headlessly where the framework allows. If nothing can be captured in the environment, say so plainly — "written but not seen" — never imply it was verified.
+On web, route this through `webapp-testing` (Playwright: open, screenshot, click through flows, read logs). On desktop, the framework chosen in "Choosing a stack" decides the path: web-layer GUIs get the web tools, egui gets `egui_kittest` for interaction, anything else falls back to run + capture + scripted input where possible. If nothing can be captured in the environment, say so plainly — "written but not seen" — never imply it was verified.
 
 Minimum drive: default size, a narrow window (phone width on web), and dark mode where the platform has it. A UI that only works at full width is a broken UI.
 
@@ -95,5 +105,6 @@ These thoughts mean STOP — you're rationalizing:
 - "I'll use frontend-design and ui-ux-pro-max together" → two taste engines give conflicting rules, a confused mix. One owner, lookups only.
 - "The markup looks right, done" → plausible markup ≠ working UI. Run, see, drive.
 - "This is a desktop app, none of the ready skills apply" → true — which is why stages 1–4 and the state rules are yours to follow manually.
+- "Any desktop framework will do" → an unverifiable UI forces "written but not seen" on every change. Pick the framework agent-testable first.
 - "I'll add loading/empty states later" → the first empty load is already in production.
 - "It's a tiny change, verification is overkill" → tiny changes break layouts silently. Run it.

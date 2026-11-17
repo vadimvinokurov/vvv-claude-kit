@@ -5,106 +5,44 @@ description: Process for building, modifying, or fixing any user interface - web
 
 # UI Development
 
-**Core idea:** two things break agent-driven UI work. First, writing markup that looks plausible in code but falls apart when rendered. Second, *inventing* taste from training-data defaults — Inter font, purple gradients, three cards with emojis. The fix is the same for both: never work blind. Route aesthetic judgment to the dedicated skills already installed, follow a fixed process, and verify everything in the running app.
+**Core idea:** never work blind. Route taste to the skills installed for it, follow the four stages, and never claim a UI works without seeing it running. This skill is the coordinator — it carries no taste of its own.
 
-This skill is the **coordinator**. It does not contain better taste than the skills below — it dispatches to them, keeps the process coherent, and covers what they don't: native desktop GUIs, quality states, and the verification loop.
+## Ready skills first — one owner per concern
 
-## Ready skills before custom rules
+- **Web taste** (aesthetic direction, typography) → `frontend-design`. Read it at stage 3, always.
+- **No design system yet, or the user asks one built** → `ui-ux-pro-max`, consulted once for a researched system (styles, palettes, font pairings, per-stack reasoning), then build against it.
+- **Cross-session consistency** → `interface-design`. If `.interface-design/system.md` exists, read it first; else keep it updated with decisions made.
+- **Web verification** (open, screenshot, click, logs) → `webapp-testing` (Playwright); absent → browser tooling directly.
+- **Web pre-ship audit** (a11y, focus, forms, dark mode) → `web-design-guidelines`. Not a plugin dependency — `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`; absent → the quality rules below.
 
-Before doing UI work yourself, check whether an installed skill owns the decision. This is not optional politeness — installed skills carry curated rules and databases this skill deliberately does not duplicate, and having several of them give *different* font or palette advice produces a confused mix. So there is exactly one owner per concern:
+Never run two taste engines — conflicting rules produce a confused mix. When routed advice contradicts this process (stages, verification), this process wins.
 
-One owner per concern, and no overlap:
+All of the above is web-only. Native desktop GUIs are handled by the stages below — which is why this skill exists.
 
-- **Aesthetic direction, typography, layout character (web)** — `frontend-design`. Before styling any web UI — read it at stage 3, always.
-- **Style/palette/font UX databases, per-stack reasoning** — `ui-ux-pro-max`. When the project has no design system yet, or the user asks for one built ("fintech app", "meditation app") — consult it *once* for a researched design system, then build against it.
-- **Design decisions persist between sessions** — `interface-design`. If the project holds its decision file (`.interface-design/system.md`), read it first and build consistently with it; if decisions are made fresh, keep it updated.
-- **Web verification (open, screenshot, click, logs)** — `webapp-testing`. Stage 4 on web. If unavailable, use browser tooling directly.
-- **Web pre-ship audit (a11y, focus, forms, dark mode)** — `web-design-guidelines`. Last pass before shipping web UI. Installed via `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`, not as a plugin dependency — if absent, apply the quality rules below instead.
+## Desktop framework: agent-testable first
 
-Two hard rules:
+If the desktop stack is not already fixed, pick it by one criterion: **can an agent see and drive this UI?**
 
-- **One taste engine per task.** `frontend-design` owns aesthetic direction; `ui-ux-pro-max` owns the reference database. Both consulted = conflicting advice. If both are relevant, read frontend-design for direction, use ui-ux-pro-max only for concrete lookups (a palette, a pairing) that serve that direction.
-- **This skill arbitrates conflicts.** When a routed skill's advice contradicts the process here (stages, verification, states), the process wins — a skill that skips verification is a worse skill, not a shortcut.
+- **Web-layer GUIs (Tauri)** — web tools see and click the UI; full e2e via WebDriver (macOS desktop WebDriver is limited).
+- **egui** — official `egui_kittest` drives the UI by accessibility tree (`get_by_label`, clicks, state asserts).
+- **Other toolkits (Tkinter, Slint, iced, Qt)** — only if the project already uses them or the user picks them; otherwise every check degrades to "written but not seen".
 
-Scope note: every skill in the table is web-centric. Native desktop GUIs (Tkinter, egui, Slint, iced, Qt, Tauri) are covered only by the stages below — that's why this skill exists.
+## The four stages
 
-## Choosing a stack: desktop framework = agent-testable first
+1. **Compose** — find before build: codebase components, `.interface-design/system.md` if present, platform standard controls, then libraries matching existing dependencies. Hand-rolling a stock dropdown or modal is a defect. Sibling-screen patterns beat abstract best practice.
+2. **Layout** — pick a spacing scale (one base unit + multiples) and an alignment model (grid / flex stacks / padded containers) before placing any element. Nudging pixels to "fix the fit" means the layout model is wrong — fix the model.
+3. **Style** — web: commit to a direction via `frontend-design` before writing style code. Own rules, all platforms: tokens over literals (CSS variables, theme structs — this is how dark mode and theming stay free), one accent color, 2–3 type sizes. Desktop does the direction choosing manually.
+4. **Verify (run → see → drive)** — run the app, screenshot the rendered result, then drive the change: click it, submit it, resize to phone width, toggle dark mode. Path by stack: web tools, `egui_kittest`, or run + capture + scripted input. If nothing is capturable, say "written but not seen" — never imply it was verified.
 
-When the desktop framework is not already fixed by the project, pick it by one criterion before all others: **can an agent see and drive this UI?** A framework whose UI cannot be verified programmatically forces the "written but not seen" mode on every change — reject it for greenfield work.
+## States — decide before finishing
 
-- **Prefer web-layer GUIs, e.g. Tauri** — the UI is a web app, so `webapp-testing` and browser tooling see it, click it, and log it. Full e2e via the WebDriver protocol (macOS desktop WebDriver is limited; the web layer remains verifiable everywhere).
-- **egui** — ships the official `egui_kittest` harness: drives the UI by accessibility tree (`get_by_label`, clicks, state assertions), no pixels needed. Combine with screenshots for how it *looks*.
-- **Any other toolkit (Tkinter, Slint, iced, Qt)** — only when the project already uses it or the user picks it. Before committing, check what automation it offers an agent (accessibility tree, scripted input, headless capture); absent that, every change degrades to run + screenshot + honest "written but not seen" for interaction.
+What each looks like, not just the happy path: **loading** (skeleton or busy indicator, never a frozen frame), **empty** (a message, not a void), **error** (user-readable, with a way back), **overflow** (a 200-character string, a list of 1000 items). A11y basics come free from standard components: labels on inputs, keyboard reach, contrast on custom color pairs. Web-only pre-ship: `web-design-guidelines`.
 
-This pairs with the headless-development rule in `building-testable-apps`: verifiable core, UI on top — and the UI, too, should be chosen verifiable.
+## Red flags
 
-## The four stages, in order
-
-Each stage consumes the output of the previous one. Skipping a stage does not save time — it moves the rework to the end, where it costs more.
-
-### Stage 1 — Compose from existing parts
-
-Before writing any UI element, look for what already exists:
-
-- Components in the codebase: design system, shared widgets, patterns in sibling screens.
-- The interface-design file, if present — decisions about buttons, spacing, colors were likely made in a previous session. Rebuilding them fresh is a defect.
-- The platform's standard components: native widgets on desktop, `<button>`, `<select>`, `<input>` on web — they carry accessibility and platform behavior for free.
-- A mature library only when the standard parts genuinely can't do it, checking what the project already depends on.
-
-Hand-rolling a dropdown, a modal or a date picker the platform provides is a defect, not diligence. And matching sibling screens' patterns matters more than abstract best practice: consistency is invisible quality.
-
-### Stage 2 — Layout system before elements
-
-Decide how things are arranged before styling anything.
-
-- Pick a **spacing scale** (one base unit, e.g. 4px, and its multiples) and use only those values.
-- Pick an **alignment model**: a grid for content-heavy pages, flex/stack containers for tool-like UIs, padded containers on desktop.
-- Place the structure — headers, sidebars, content areas, gaps, grouping — then fill it.
-
-If you find yourself nudging pixel values to make things "sit right", stop: the layout model is wrong, not the pixels.
-
-### Stage 3 — Deliberate style (routed)
-
-Aesthetics is a decision, not a default — and on web, the decision belongs to `frontend-design`. Consult it and commit to a direction before writing style code.
-
-What remains this skill's own — because it is platform-agnostic and the ready skills are web-only:
-
-- **Tokens, not literals.** Colors, fonts, spacing go through variables/constants (CSS custom properties, theme structs on desktop). Two hardcoded hex values in different files is how themes rot.
-- **Dark mode as tokens.** Define colors semantically (surface, text, accent), never as "white text on this blue". Dark mode then falls out for free; without tokens it is a rewrite.
-- **Restraint.** One accent color used sparingly beats five colors used evenly; a type scale of 2–3 sizes beats a size per label.
-- **Desktop GUIs.** No frontend-design here — apply the same discipline manually: commit to a direction first, prefer the framework's component set, and keep the token rule above.
-
-### Stage 4 — Verify in the running app (run → see → drive)
-
-**Never claim a UI works, looks right, or is fixed unless you have seen it running after the change.** Reading the code is not verification — the render layer is exactly where plausible code diverges from reality.
-
-1. **Run** — start the app (dev server, `cargo run`, `python main.py`).
-2. **See** — screenshot the rendered result, compare against the stage-3 intent and, for fixes, against how it looked before.
-3. **Drive** — exercise the changed parts: click, submit, resize, toggle theme. Check the states the user will hit, not just the happy path.
-
-On web, route this through `webapp-testing` (Playwright: open, screenshot, click through flows, read logs). On desktop, the framework chosen in "Choosing a stack" decides the path: web-layer GUIs get the web tools, egui gets `egui_kittest` for interaction, anything else falls back to run + capture + scripted input where possible. If nothing can be captured in the environment, say so plainly — "written but not seen" — never imply it was verified.
-
-Minimum drive: default size, a narrow window (phone width on web), and dark mode where the platform has it. A UI that only works at full width is a broken UI.
-
-## Quality states — cheap to add, costly to skip
-
-A screen shows one of these at any moment; decide what each looks like *before* finishing:
-
-- **Loading** — never a frozen frame; skeleton or busy indicator.
-- **Empty** — an empty list is valid; show a message, not a void.
-- **Error** — user-readable messages with a recovery action where one exists.
-- **Overflow** — long text, many items, no data. Ask "what if this string is 200 characters?" before trusting the layout.
-
-Plus the a11y basics, which standard components mostly give free: labels on inputs, keyboard-reachable actions, contrast on any custom color pair.
-
-## Red Flags
-
-These thoughts mean STOP — you're rationalizing:
-
-- "No skill needed, I know good design" → training-data taste is the AI-slop source. Route to the owner for the concern.
-- "I'll use frontend-design and ui-ux-pro-max together" → two taste engines give conflicting rules, a confused mix. One owner, lookups only.
-- "The markup looks right, done" → plausible markup ≠ working UI. Run, see, drive.
-- "This is a desktop app, none of the ready skills apply" → true — which is why stages 1–4 and the state rules are yours to follow manually.
-- "Any desktop framework will do" → an unverifiable UI forces "written but not seen" on every change. Pick the framework agent-testable first.
-- "I'll add loading/empty states later" → the first empty load is already in production.
-- "It's a tiny change, verification is overkill" → tiny changes break layouts silently. Run it.
+- "Markup looks right, done" → plausible ≠ rendered. Run, see, drive.
+- "I know good design, no skill needed" → training-data taste is the AI-slop source.
+- "Use frontend-design and ui-ux-pro-max together" → two taste engines, conflicting rules.
+- "Any desktop framework will do" → an unverifiable UI is "written but not seen" forever.
+- "It's tiny, verification is overkill" → tiny changes break layouts silently.
+- "States later" → the first empty load is already in production.

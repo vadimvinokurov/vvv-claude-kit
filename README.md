@@ -29,7 +29,8 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
 | `common-rules` | The operating rules for every session: never fabricate, think before coding, simplicity first, surgical changes, goal-driven execution, commit conventions, direct communication style, when to ask versus proceed. Routed from `using-skills` at the start of every conversation. |
-| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, TDD for all code). Injected at session start; not meant to trigger by description. |
+| `ui-development` | Guidance for any UI task — web pages, web apps, and native GUIs: compose from existing components first, build the layout system before styling, style deliberately with tokens, then verify by running the app and seeing the rendered result (run → see → drive). Quality states (loading/empty/error) and red flags included. Routed from `using-skills` on any UI work. |
+| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, ui-development for any UI task, TDD for all code). Injected at session start; not meant to trigger by description. |
 
 ## Hooks
 

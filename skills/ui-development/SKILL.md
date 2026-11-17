@@ -26,13 +26,3 @@ Run the app, screenshot the rendered result, compare against the intent from ste
 
 **6. States and a11y — the pre-ship audit on every platform.**
 Decide before finishing what each looks like: **loading** (skeleton or indicator, never a frozen frame), **empty** (a message, not a void), **error** (user-readable, with a way back), **overflow** (a 200-character string, a list of 1000 items). Standard components give the a11y basics free — keep them: labels on inputs, keyboard reach, contrast on any custom color pair.
-
-Two binding rules across all steps: **one taste engine per task** — `frontend-design` owns web direction, `ui-ux-pro-max` serves lookups; running both as taste engines yields conflicting rules. And **this process arbitrates**: routed advice that skips verification loses.
-
-## Red flags
-
-- "Markup looks right, done" → plausible ≠ rendered. Run, see, drive.
-- "I know good design, no skill needed" → training-data taste is the AI-slop source.
-- "Any desktop framework will do" → an unverifiable UI is "written but not seen" forever.
-- "It's tiny, verification is overkill" → tiny changes break layouts silently.
-- "States later" → the first empty load is already in production.

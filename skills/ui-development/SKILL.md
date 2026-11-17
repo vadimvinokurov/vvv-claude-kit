@@ -13,13 +13,13 @@ This skill is the **coordinator**. It does not contain better taste than the ski
 
 Before doing UI work yourself, check whether an installed skill owns the decision. This is not optional politeness — installed skills carry curated rules and databases this skill deliberately does not duplicate, and having several of them give *different* font or palette advice produces a confused mix. So there is exactly one owner per concern:
 
-| Concern | Owner | When |
-|---|---|---|
-| Aesthetic direction, typography, layout character (web) | `frontend-design` | Before styling any web UI — read it at stage 3, always. |
-| Style/palette/font UX databases, per-stack reasoning | `ui-ux-pro-max` | When the project has no design system yet, or the user asks for one built ("fintech app", "meditation app") — consult it *once* for a researched design system, then build against it. |
-| Design decisions persist between sessions | `interface-design` | If the project holds its decision file (`.interface-design/system.md`), read it first and build consistently with it; if decisions are made fresh, keep it updated. |
-| Web verification (open, screenshot, click, logs) | `webapp-testing` | Stage 4 on web. If unavailable, use browser tooling directly. |
-| Web pre-ship audit (a11y, focus, forms, dark mode) | `web-design-guidelines` | Last pass before shipping web UI. Installed via `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`, not as a plugin dependency — if absent, apply the quality rules below instead. |
+One owner per concern, and no overlap:
+
+- **Aesthetic direction, typography, layout character (web)** — `frontend-design`. Before styling any web UI — read it at stage 3, always.
+- **Style/palette/font UX databases, per-stack reasoning** — `ui-ux-pro-max`. When the project has no design system yet, or the user asks for one built ("fintech app", "meditation app") — consult it *once* for a researched design system, then build against it.
+- **Design decisions persist between sessions** — `interface-design`. If the project holds its decision file (`.interface-design/system.md`), read it first and build consistently with it; if decisions are made fresh, keep it updated.
+- **Web verification (open, screenshot, click, logs)** — `webapp-testing`. Stage 4 on web. If unavailable, use browser tooling directly.
+- **Web pre-ship audit (a11y, focus, forms, dark mode)** — `web-design-guidelines`. Last pass before shipping web UI. Installed via `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`, not as a plugin dependency — if absent, apply the quality rules below instead.
 
 Two hard rules:
 
@@ -89,11 +89,11 @@ Plus the a11y basics, which standard components mostly give free: labels on inpu
 
 ## Red Flags
 
-| Thought | Reality |
-|---------|---------|
-| "No skill needed, I know good design" | Training-data taste is the AI-slop source. Route to the owner for the concern. |
-| "I'll use frontend-design and ui-ux-pro-max together" | Two taste engines = conflicting rules, a confused mix. One owner, lookups only. |
-| "The markup looks right, done" | Plausible markup ≠ working UI. Run, see, drive. |
-| "This is a desktop app, none of the ready skills apply" | True — which is why stages 1–4 and the state rules are yours to follow manually. |
-| "I'll add loading/empty states later" | The first empty load is already in production. |
-| "It's a tiny change, verification is overkill" | Tiny changes break layouts silently. Run it. |
+These thoughts mean STOP — you're rationalizing:
+
+- "No skill needed, I know good design" → training-data taste is the AI-slop source. Route to the owner for the concern.
+- "I'll use frontend-design and ui-ux-pro-max together" → two taste engines give conflicting rules, a confused mix. One owner, lookups only.
+- "The markup looks right, done" → plausible markup ≠ working UI. Run, see, drive.
+- "This is a desktop app, none of the ready skills apply" → true — which is why stages 1–4 and the state rules are yours to follow manually.
+- "I'll add loading/empty states later" → the first empty load is already in production.
+- "It's a tiny change, verification is overkill" → tiny changes break layouts silently. Run it.

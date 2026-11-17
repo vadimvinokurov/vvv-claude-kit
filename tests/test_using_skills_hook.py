@@ -2,8 +2,9 @@
 
 Mirrors superpowers: a SessionStart hook injects the using-skills skill
 content every session, so the generic skill mandate (and the hard routes
-to this plugin's skills) lives in the injected content — not in
-common_agent_rules.md.
+to this plugin's skills, including /common-rules) lives in the injected
+content. The hook injects only using-skills; the operating rules live in
+the trigger-based common-rules skill.
 """
 
 import json
@@ -13,7 +14,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 HOOKS_JSON = REPO / "hooks" / "hooks.json"
 SKILL_FILE = REPO / "skills" / "using-skills" / "SKILL.md"
-RULES_FILE = REPO / "common_agent_rules.md"
 
 
 def sessionstart_commands():
@@ -41,9 +41,12 @@ class UsingSkillsInjectionTests(unittest.TestCase):
         self.assertIn("using-skills/SKILL.md", joined,
                       "SessionStart hook does not inject skills/using-skills/SKILL.md")
 
-    def test_sessionstart_hook_still_loads_agent_rules(self):
-        joined = " ".join(sessionstart_commands())
-        self.assertIn("common_agent_rules.md", joined)
+    def test_sessionstart_hook_injects_only_using_skills(self):
+        commands = [c for c in sessionstart_commands() if c.strip()]
+        self.assertEqual(
+            commands,
+            ['cat "${CLAUDE_PLUGIN_ROOT}/skills/using-skills/SKILL.md"'],
+            "SessionStart hook should inject only skills/using-skills/SKILL.md")
 
 
 class SkillMandateContentTests(unittest.TestCase):
@@ -62,10 +65,10 @@ class SkillMandateContentTests(unittest.TestCase):
         self.assertIn("subagent", text.lower(),
                       "using-skills lacks the subagent exemption")
 
-    def test_agent_rules_no_longer_enumerate_skills(self):
-        text = RULES_FILE.read_text()
-        self.assertNotIn("/building-testable-apps", text)
-        self.assertNotIn("/developing-ui", text)
+    def test_using_skills_routes_to_common_rules(self):
+        text = SKILL_FILE.read_text()
+        self.assertIn("/common-rules", text,
+                      "using-skills does not hard-route every conversation to /common-rules")
 
 
 if __name__ == "__main__":

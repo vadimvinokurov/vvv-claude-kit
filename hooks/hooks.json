@@ -5,10 +5,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/common_agent_rules.md\""
-          },
-          {
-            "type": "command",
             "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/using-skills/SKILL.md\""
           }
         ]

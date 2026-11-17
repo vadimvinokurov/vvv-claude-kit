@@ -1,4 +1,9 @@
-# CLAUDE.md
+---
+name: common-rules
+description: Use when starting any conversation - establishes the operating rules Claude Code follows in every session, covering never-fabricate, think-before-coding, simplicity, surgical changes, verified goals, commits, communication style, and when to ask versus proceed; routed from using-skills so it applies before any response or action
+---
+
+# Common Rules
 
 ## 1. Never fabricate
 

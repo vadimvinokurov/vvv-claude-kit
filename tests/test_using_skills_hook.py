@@ -58,8 +58,6 @@ class SkillMandateContentTests(unittest.TestCase):
                       "using-skills lacks the even-1%-chance invocation mandate")
         self.assertIn("/building-testable-apps", text,
                       "using-skills does not hard-route to /building-testable-apps")
-        self.assertIn("/developing-ui", text,
-                      "using-skills does not hard-route to /developing-ui")
         self.assertIn("test-driven-development", text,
                       "using-skills does not carry the TDD mandate")
         self.assertIn("subagent", text.lower(),

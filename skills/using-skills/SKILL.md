@@ -24,7 +24,6 @@ This is not negotiable. You cannot rationalize your way out of this.
 - Every conversation → `/common-rules` — the operating rules (never fabricate, think before coding, simplicity, surgical changes, verified goals, commits, communication style, when to ask).
 - Any new application, module, or feature → `/building-testable-apps` (new code only — existing code is never rewritten to conform unless explicitly requested).
 - Any code at all, including bugfixes in existing code → the `/superpowers:test-driven-development` cycle (RED → GREEN → REFACTOR).
-- Any user interface — building, modifying, fixing → `/developing-ui`.
 
 ## Red Flags
 

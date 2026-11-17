@@ -18,8 +18,6 @@ Installing the plugin also installs its dependencies from the official `claude-p
 
 - **superpowers** — disciplined skill-driven workflow
 - **context7** — up-to-date library documentation lookup (MCP)
-- **frontend-design** — visual design guidance for UI/UX implementation
-- **ui-ux-pro-max** — searchable design intelligence: styles, palettes, font pairings, UX guidelines (own marketplace `ui-ux-pro-max-skill`)
 
 ## Updating
 
@@ -31,8 +29,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
 | `common-rules` | The operating rules for every session: never fabricate, think before coding, simplicity first, surgical changes, goal-driven execution, commit conventions, direct communication style, when to ask versus proceed. Routed from `using-skills` at the start of every conversation. |
-| `developing-ui` | The whole UI path for web, Tauri and native GUIs: reuse existing components and tokens first, one layout system, deliberate aesthetics (via frontend-design), then the run-see-drive loop — screenshot/snapshot, interact, read logs — before it counts as done. Triggers on building or modifying any UI. |
-| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, TDD for all code, developing-ui). Injected at session start; not meant to trigger by description. |
+| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, TDD for all code). Injected at session start; not meant to trigger by description. |
 
 ## Hooks
 
@@ -52,6 +49,5 @@ scripts/protect-secrets.py        # the secrets-protection hook script
 skills/common-rules/SKILL.md      # operating rules for every session (trigger-based, routed from using-skills)
 tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
 tests/test_common_rules_skill.py  # common-rules skill migration tests (python3 tests/test_common_rules_skill.py)
-tests/test_developing_ui_skill.py # developing-ui skill wiring tests (python3 tests/test_developing_ui_skill.py)
 tests/test_using_skills_hook.py   # using-skills injection wiring tests (python3 tests/test_using_skills_hook.py)
 ```

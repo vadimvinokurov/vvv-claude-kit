@@ -1,16 +1,14 @@
 {
   "name": "vvv-claude-kit",
   "description": "Personal collection of skills and hooks for Claude Code",
-  "version": "0.14.2",
+  "version": "0.15.0",
   "author": {
     "name": "Vadim Vinokurov",
     "url": "https://github.com/vadimvinokurov"
   },
   "dependencies": [
     "superpowers@claude-plugins-official",
-    "context7@claude-plugins-official",
-    "frontend-design@claude-plugins-official",
-    "ui-ux-pro-max@ui-ux-pro-max-skill"
+    "context7@claude-plugins-official"
   ],
   "homepage": "https://github.com/vadimvinokurov/vvv-claude-kit",
   "repository": "https://github.com/vadimvinokurov/vvv-claude-kit",

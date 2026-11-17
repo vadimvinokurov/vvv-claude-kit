@@ -9,15 +9,15 @@ description: Process for building, modifying, or fixing any user interface - web
 
 ## Ready skills first — one owner per concern
 
-- **Web taste** (aesthetic direction, typography) → `frontend-design`. Read it at stage 3, always.
-- **No design system yet, or the user asks one built** → `ui-ux-pro-max`, consulted once for a researched system (styles, palettes, font pairings, per-stack reasoning), then build against it.
-- **Cross-session consistency** → `interface-design`. If `.interface-design/system.md` exists, read it first; else keep it updated with decisions made.
-- **Web verification** (open, screenshot, click, logs) → `webapp-testing` (Playwright); absent → browser tooling directly.
-- **Web pre-ship audit** (a11y, focus, forms, dark mode) → `web-design-guidelines`. Not a plugin dependency — `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`; absent → the quality rules below.
+One owner per concern; the platform decides who owns it:
+
+- **Taste** (aesthetic direction, typography) — web: `frontend-design`, read it at stage 3, always. Desktop: no ready skill owns taste — commit to a direction manually (stage 3), with `ui-ux-pro-max` style/palette lookups as reference.
+- **Design system from scratch** — `ui-ux-pro-max`: consulted once for a researched system (styles, palettes, font pairings, per-stack reasoning for 20+ web/mobile stacks). Desktop stacks aren't among them — there it serves lookups (palette, pairing) only.
+- **Cross-session consistency** — `interface-design`, platform-agnostic: if `.interface-design/system.md` exists, read it first; else keep it updated with decisions made.
+- **Verification** (open, screenshot, click, logs) — web: `webapp-testing` (Playwright); absent → browser tooling directly. Desktop: by framework choice — Tauri gets the web tools, egui gets `egui_kittest`, anything else gets run + capture.
+- **Pre-ship audit** (a11y, focus, forms, dark mode) — web: `web-design-guidelines`, not a plugin dependency (`npx skills add vercel-labs/agent-skills --skill web-design-guidelines`); absent → the quality rules below. Desktop: the quality rules below are the audit.
 
 Never run two taste engines — conflicting rules produce a confused mix. When routed advice contradicts this process (stages, verification), this process wins.
-
-All of the above is web-only. Native desktop GUIs are handled by the stages below — which is why this skill exists.
 
 ## Desktop framework: agent-testable first
 

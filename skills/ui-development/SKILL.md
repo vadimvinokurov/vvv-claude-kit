@@ -14,16 +14,13 @@ One owner per concern; the platform decides who owns it:
 - **Taste** (aesthetic direction, typography) — web: `frontend-design`, read it at stage 3, always. Desktop: no ready skill owns taste — commit to a direction manually (stage 3), with `ui-ux-pro-max` style/palette lookups as reference.
 - **Design system from scratch** — `ui-ux-pro-max`: consulted once for a researched system (styles, palettes, font pairings, per-stack reasoning for 20+ web/mobile stacks). Desktop stacks aren't among them — there it serves lookups (palette, pairing) only.
 - **Cross-session consistency** — `interface-design`, platform-agnostic: if `.interface-design/system.md` exists, read it first; else keep it updated with decisions made.
-- **Verification** (open, screenshot, click, logs) — if the stack ships a harness that covers this, use it: web → `webapp-testing` (Playwright), egui → `egui_kittest` (accessibility tree). No harness → Playwright MCP / browser tooling; Tauri's UI is web code, so those tools reach its web layer too. Everything else — run + capture.
-- **Pre-ship audit** (a11y, focus, forms, dark mode) — web: `web-design-guidelines`, not a plugin dependency (`npx skills add vercel-labs/agent-skills --skill web-design-guidelines`); absent → the quality rules below. Desktop: the quality rules below are the audit.
-
-Never run two taste engines — conflicting rules produce a confused mix. When routed advice contradicts this process (stages, verification), this process wins.
+- **Verification** (open, screenshot, click, logs) — if the stack ships a harness that covers this, use it: egui → `egui_kittest` (accessibility tree). No harness → Playwright MCP.
 
 ## Desktop framework: agent-testable first
 
 If the desktop stack is not already fixed, pick it by one criterion: **can an agent see and drive this UI?**
 
-- **Web-layer GUIs (Tauri)** — web tools see and click the UI; full e2e via WebDriver (macOS desktop WebDriver is limited).
+- **Web-layer GUIs (Tauri in Rust; Electron, Wails, Neutralino elsewhere)** — the UI is a web app, so the same web tools see and drive it; full e2e via WebDriver (macOS desktop WebDriver is limited).
 - **egui** — official `egui_kittest` drives the UI by accessibility tree (`get_by_label`, clicks, state asserts).
 - **Other toolkits (Tkinter, Slint, iced, Qt)** — only if the project already uses them or the user picks them; otherwise every check degrades to "written but not seen".
 

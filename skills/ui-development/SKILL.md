@@ -1,6 +1,6 @@
 ---
 name: ui-development
-description: Playbook for building, modifying, or fixing any user interface - web pages, web apps, and native GUIs (Tauri, egui, Slint, iced, Tkinter, Qt) in any language. Fixes the order of work: look for existing parts first, choose an agent-testable desktop stack, get the design system from ready skills (frontend-design on web, ui-ux-pro-max lookups, interface-design for decision memory), decide states before finishing, verify by running the app (framework harness, else Playwright MCP) - never claim a UI works without seeing it. Use for ANY UI task, even small ones - a button, a broken layout, a form, a whole screen, "the app looks broken".
+description: Playbook for building, modifying, or fixing any user interface - web pages, web apps, and native GUIs (Tauri, egui, Slint, iced, Tkinter, Qt) in any language. Fixes the order of work: look for existing parts first, choose an agent-testable desktop stack, get the design system from ready skills (frontend-design on web, ui-ux-pro-max lookups), keep decisions in `.interface-design/system.md`, decide states before finishing, verify by running the app (framework harness, else Playwright MCP) - never claim a UI works without seeing it. Use for ANY UI task, even small ones - a button, a broken layout, a form, a whole screen, "the app looks broken".
 ---
 
 # UI Development

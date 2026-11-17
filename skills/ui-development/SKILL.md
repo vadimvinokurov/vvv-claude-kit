@@ -14,7 +14,8 @@ description: Playbook for building, modifying, or fixing any user interface - we
 - Platform stock controls (`<select>`, native widgets, framework component sets) before anything hand-built: hand-rolling a dropdown or modal is a defect, not diligence.
 
 **2. Design system once, then tokens.**
-- `ui-ux-pro-max` for the researched system (app type → style, palette, font pairing; on desktop it serves lookups), `frontend-design` on web — read it before any style code. Then write the chosen system as named tokens in the framework's theme system (CSS variables, theme structs), sized to what this UI actually needs — a compact semantic set (surface / text / accent, spacing base, a type scale) beats an exhaustive library.
+- `ui-ux-pro-max` for the researched system (app type → style, palette, font pairing; on desktop it serves lookups), `frontend-design` on web — read it before any style code. 
+- Then write the chosen system as named tokens in the framework's theme system (CSS variables, theme structs), sized to what this UI actually needs — a compact semantic set (surface / text / accent, spacing base, a type scale) beats an exhaustive library.
 
 **3. Layout system before elements.**
 - Fix a spacing scale (one base unit + multiples) and an alignment model (grid / stacks / padded containers), then place the structure: headers, sidebars, content, gaps. Nudging pixels to "make it fit" means the model is wrong — fix the model.

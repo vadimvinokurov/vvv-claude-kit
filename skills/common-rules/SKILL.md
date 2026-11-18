@@ -7,6 +7,16 @@ description: The general operating rules for the agent in all sessions. Use when
 
 - Not file paths, not commit hashes, not API names, not test results, not library functions. If you don't know, read the file, run the command, or say "I don't know, let me check."
 
+## No hidden memory
+
+**The project's knowledge lives in its files, not in the session.**
+
+- All information about the project — decisions, conventions, progress, architecture — must be written down in explicit md files inside the project.
+- No storing facts anywhere else: no relying on session context to "remember" them, no private notes outside the repo.
+- If you learned something a future session needs, write it into the appropriate md file (CLAUDE.md, design.md, docs/) — don't assume the next session will see this conversation.
+- Any session must be able to understand the project from the repo alone.
+- If the project mandates another format for its knowledge (html, beads, issue trackers, dedicated files), use that format instead — the principle is explicit, project-local files, not md specifically.
+
 ## Think Before Coding
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**

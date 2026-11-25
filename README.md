@@ -44,6 +44,10 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `load-agent-rules` | SessionStart hook that injects the `using-skills` skill mandate into the session context on startup; from there every conversation is routed to the `common-rules` skill. |
 | `protect-secrets` | PreToolUse hook that denies agent access to secrets: `.env` and `.env.*`, `*.pem`, `*.key`, and the `.secrets`/`.secret` folders — no reading, editing, or browsing them (including via Bash such as `cat .env`), and no staging or committing them with git. Files ending in `.example` / `.template` (e.g. `.env.example`) stay allowed. The git check looks at the real index, so a commit message that merely mentions `.env` is fine. |
+| `no-repeat-call` | PostToolUse hook on Bash that annotates a rerun which returned output identical to the previous run of the same command — it bought no information — with a cue to change mechanism (editing tools, narrower gate, delegation). Any change in input or output resets the counter; the signal never denies the call. |
+| `shell-edit-limit` | PreToolUse hook on Bash that denies the third shell modification of the same existing file in a session (`sed -i`, `tee`, redirects, `patch`…) and names the Write/Edit tools; file **creation** through the shell stays free, and a project may bypass via `.claude/shell-edits-allowlist` (one fnmatch pattern per line). |
+| `skill-reminder` | PreToolUse hook on the path tools that adds one line naming the skill applying to the path being touched (mapping in `scripts/skill-reminders.json`, default: UI directories → `ui-development` + `token-economy`). |
+| `release-tag-gate` | PreToolUse hook on Bash that refuses publishing a git tag (`push --tags`, `refs/tags/`, a named existing tag) unless the project's `.release-gates/last-run.json` marker says `ok: true` for the current HEAD — the marker is written by the kit's `release_gates.sh` template (skills/release-gates). Local tag creation and branch pushes stay allowed. |
 
 ## Structure
 
@@ -51,10 +55,19 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 .claude-plugin/marketplace.json   # marketplace manifest
 .claude-plugin/plugin.json        # plugin manifest (version lives here)
 skills/                           # skills (auto-discovered)
-hooks/hooks.json                  # SessionStart + PreToolUse hook registration (auto-registered)
-scripts/protect-secrets.py        # the secrets-protection hook script
-skills/common-rules/SKILL.md      # operating rules for every session (trigger-based, routed from using-skills)
+hooks/hooks.json                  # SessionStart + PreToolUse + PostToolUse hook registration (auto-registered)
+scripts/protect-secrets.py        # secrets-protection hook (PreToolUse)
+scripts/shell-edit-limit.py       # third-shell-edit block (PreToolUse, per-session state)
+scripts/release-tag-gate.py       # tag publication gate (PreToolUse, reads .release-gates/last-run.json)
+scripts/release_gates.sh          # release-gates template: project fills GATES, marker written here
+scripts/skill-reminder.py         # path → skill one-line reminder (PreToolUse)
+scripts/skill-reminders.json      # the reminder mapping (data, edited freely)
+scripts/no-repeat-call.py         # worthless-rerun annotator (PostToolUse, per-session state)
 tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
 tests/test_common_rules_skill.py  # common-rules skill migration tests (python3 tests/test_common_rules_skill.py)
 tests/test_using_skills_hook.py   # using-skills injection wiring tests (python3 tests/test_using_skills_hook.py)
+tests/test_no_repeat_call.py      # no-repeat annotator hook tests
+tests/test_shell_edit_limit.py    # shell-edit-limit hook tests
+tests/test_skill_reminder.py      # skill-reminder hook tests
+tests/test_release_tag_gate.py    # release-tag-gate hook tests (real temp git repo)
 ```

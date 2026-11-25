@@ -44,8 +44,8 @@ providers **1 request = 1 assistant turn** — a tool-call budget is a money bud
 
 ## 3. Editing — no shell-escaping into files
 
-- Edit/Write are the default. Avoid `sed -i`, heredoc redirects (`python3 - <<EOF`),
-  `perl -pi`, `tee file` for single-file edits: mangled quoting costs a read+edit
+- Edit/Write are the default. Avoid `sed -i`, heredoc-fed interpreters,
+  in-place stream editors, `tee file` for single-file edits: mangled quoting costs a read+edit
   cycle per attempt (documented: 5–6 failed rounds vs a first-try rewrite).
 - Exception: a routine bulk transform Edit can't reach — one script, run **once**,
   then `git diff --stat` + spot checks.
@@ -62,8 +62,8 @@ providers **1 request = 1 assistant turn** — a tool-call budget is a money bud
 
 - Re-running a suite that already confirmed the same code against the same
   environment buys no information and burns a full-context request each time.
-- JS gates from the project's `ui/` (or configured dir), Rust from the workspace
-  root — a wrong-cwd run silently tests the wrong environment.
+- frontend gates from the project's `ui/` (or configured dir), core gates from
+  the workspace root — a wrong-cwd run silently tests the wrong environment.
 
 ## 5. Budget and metering
 

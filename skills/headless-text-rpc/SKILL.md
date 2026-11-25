@@ -1,6 +1,6 @@
 ---
 name: headless-text-rpc
-description: Use when adding an interactive capability to a stateful app (web, Tauri, desktop), wiring its automated checks, or when an agent verifies a UI by poking at markup instead of running commands. Carries the text-RPC obligations that make every screen feature checkable headless - one shared handler for button and command, typed coercion at one boundary, real-shaped command fakes, and snapshots readable by tests.
+description: Use when adding an interactive capability to a stateful app (web, desktop), wiring its automated checks, or when an agent verifies a UI by poking at markup instead of running commands. Carries the text-RPC obligations that make every screen feature checkable headless - one shared handler for button and command, typed coercion at one boundary, real-shaped command fakes, and snapshots readable by tests.
 ---
 
 # Headless Text RPC — every capability is checkable with no screen
@@ -29,7 +29,7 @@ states the requirement; this skill carries its operating mechanics.)
    coercion and validation happen in one place, in the command layer. Nothing
    untyped crosses into the runtime — a `null` or string that silently replaced
    a number inside the runtime is the documented bug class here (untyped arg
-   passed into Tauri as null). Evidence: malformed input is rejected at the
+   reaching a runtime bridge as null). Evidence: malformed input is rejected at the
    boundary test, never deep inside.
 
 4. **Fakes keep the real shape.** Test doubles for external systems repeat the

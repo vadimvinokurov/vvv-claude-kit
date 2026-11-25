@@ -22,8 +22,8 @@ first question.
 **Delegate:** module builds with test loops; multi-file analysis; gate/debug
 cycles; log mining; benchmark runs.
 
-**Stay inline:** edits of roughly ≤5 self-contained calls; shared-file integration
-(`lib.rs`, `Cargo.toml`, `App.tsx`); judgment calls needing the live conversation;
+**Stay inline:** edits of roughly ≤5 self-contained calls; shared-file integration (a core module, a manifest file, a root component);
+judgment calls needing the live conversation;
 a single-fact lookup cheaper than the spawn. An inline task that outgrows this
 mid-flight becomes a delegation candidate — don't let an inline task grow into a
 fat turn.

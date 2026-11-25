@@ -82,6 +82,26 @@ ui_design/
   accept visual changes through ad-hoc screenshots meanwhile (an OS
   screenshot is never acceptance evidence).
 
+## Image budget
+
+Reading images is the most context-expensive kind of reading — each image is
+re-billed on every later turn of the session (documented here: 58 images,
+15.5 MB read in one session; one golden read six times).
+
+1. **One image per decision.** Each visual decision reads the image once. The
+   same question is not answered by reading the same unchanged image again —
+   the re-read buys nothing and pays the full context price.
+2. **The outcome of a comparison lives in its numbers, not in a re-read.** The
+   harness prints diff percentages per case; rereading the image to "confirm"
+   what the diff already said is the process bug.
+3. **Element scope over full window.** When only a part is in question, read
+   the isolated variant render (the showcase's `?show=` / `data-variant`
+   output), not the whole composite screen.
+4. **Only visual acceptance reads images.** Every other verification is text
+   and numbers: diff outputs, snapshots, evaluate results, test outcomes —
+   consistent with the live-check rule and `token-economy` §2 (images: read
+   only when the question is genuinely visual and no text metric answers it).
+
 ## Traps (each one has bitten a real project)
 
 | Trap | Rule |

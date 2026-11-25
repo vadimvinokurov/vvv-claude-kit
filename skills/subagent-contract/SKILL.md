@@ -1,6 +1,6 @@
 ---
 name: subagent-contract
-description: Use when delegating - at the moment of deciding whether to spawn a subagent, when writing or reviewing a spawn prompt, while supervising a running agent, and when you yourself are the spawned agent executing such a task. Carries the spawn test (delegate vs stay inline), the five-field spawn contract, budgets and checkpoints for agents, waiting rules, and what a subagent must report to be accepted. Invoke token-economy for session-side context rules.
+description: Use when delegating - at the moment of deciding whether to spawn a subagent, when writing or reviewing a spawn prompt, while supervising a running agent, and when you yourself are the spawned agent executing such a task. Carries the spawn test (delegate vs stay inline), the five-field spawn contract, budgets and checkpoints for agents, waiting rules, the project agent-brief lifecycle (docs/notes/agent-brief.md), and what a subagent must report to be accepted. Invoke token-economy for session-side context rules.
 ---
 
 # Subagent Contract — spawning, supervising, being the agent
@@ -79,6 +79,31 @@ owner language, and no sleep-polling.
 - Acceptance: an agent report is accepted only with gate outputs attached, and the
   coordinator runs **one scoped gate** over the touched module before closing the
   item. A summary is trusted only when spot-checkable.
+
+## 5. Agent brief — the project's standing brief (docs/notes/agent-brief.md)
+
+Spawn prompts are pointers (§2); the pointer's target is the project's standing
+brief. In a project that has none, **the first session with a first agent task
+creates it** at `docs/notes/agent-brief.md` — before or together with the first
+spawn. It is updated when new knowledge appears (a rule, a trap, a command), not
+only after errors; knowledge learned from an error is one instance of it.
+
+Template (sections, filled per project):
+
+```
+# Agent brief
+- Layers: which module owns what.
+- File partition: which task classes touch which areas.
+- Code style: conventions beyond the linter's reach.
+- Gates: exact commands, per module, with cwd.
+- Known traps: each as a rule + why.
+```
+
+One line goes into the project's CLAUDE.md — *layer facts and traps: see*
+`docs/notes/agent-brief.md` — the reminder always rides in context while the
+content is read on demand. The brief is a plain md file: stable instructions
+are cheapest to read on demand with a shared cache prefix; task state stays in
+the tracker; CLAUDE.md stays policy-sized, carrying nothing but the pointer.
 
 ## Rationalization table
 

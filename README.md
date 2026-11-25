@@ -1,6 +1,9 @@
 # vvv-claude-kit
 
-A personal collection of skills and hooks for Claude Code.
+A personal collection of skills and hooks for Claude Code, designed as a
+companion to the `superpowers` plugin: superpowers owns the process pipelines,
+this kit carries the operating layer around them (rules, testability
+contracts, token economics, UI pipeline, release gates).
 
 ## Install
 

@@ -19,6 +19,19 @@ This is not negotiable. You cannot rationalize your way out of this.
 
 **Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it. Then announce "Using [skill] to [purpose]" and follow the skill exactly.
 
+## Relation to superpowers
+
+This plugin works as a **companion to the superpowers plugin**, not a
+replacement: superpowers owns the process pipelines (brainstorming → plans →
+TDD → debugging → worktrees → code review), and this kit's skills carry the
+operating layer those pipelines run inside — `common-rules` (discipline),
+`testable-apps-development` + `headless-text-rpc` (what a feature must satisfy
+to be done), `token-economy` + `subagent-contract` (request and context
+economics of running those pipelines), `ui-development`, `release-gates`, and
+the golden/oracle skills. Invoke superpowers skills for the process and this
+kit's skills for the discipline around them; neither list is optional when
+routed.
+
 ## Hard routes (no judgment calls)
 
 - Every conversation → `/common-rules` — the operating rules (never fabricate, think before coding, simplicity, surgical changes, verified goals, commits, communication style, when to ask).

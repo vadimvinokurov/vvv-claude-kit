@@ -17,7 +17,6 @@ then in `/plugins` install **vvv-claude-kit** (or with the command):
 Installing the plugin also installs its dependencies from the official `claude-plugins-official` marketplace:
 
 - **superpowers** — disciplined skill-driven workflow
-- **frontend-design**, **ui-ux-pro-max** — UI stack driven by the `ui-development` skill; cross-session UI decisions live in a `.interface-design/system.md` file convention, no plugin needed
 - [web-design-guidelines](https://github.com/vercel-labs/agent-skills) — pre-ship web audit; not a plugin dependency, install with `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`
 
 ## Updating
@@ -30,8 +29,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 |---|---|
 | `building-testable-apps` | 7 rules of headless development: an app = a pure library + auto-generated UI, every feature accepted by commands with no screen. Triggers on any app/feature creation. |
 | `common-rules` | The operating rules for every session: never fabricate, think before coding, simplicity first, surgical changes, goal-driven execution, commit conventions, direct communication style, when to ask versus proceed. Routed from `using-skills` at the start of every conversation. |
-| `ui-development` | Playbook for any UI task — web and native GUIs: four ordered steps (look before build — ready-made over invented; design system from ready skills — frontend-design for taste, ui-ux-pro-max for style references — decisions in `design.md`; layout model first; states as the pre-ship audit), never claiming a UI works without seeing it running, and personally owning what the ready skills don't cover: desktop GUIs, quality states (loading/empty/error). Routed from `using-skills` on any UI work. |
-| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, ui-development for any UI task, TDD for all code). Injected at session start; not meant to trigger by description. |
+| `using-skills` | Skill-discipline mandate: invoke matching skills before any response, hard routes to the plugin's skills (common-rules every conversation, building-testable-apps, TDD for all code). Injected at session start; not meant to trigger by description. |
 
 ## Hooks
 

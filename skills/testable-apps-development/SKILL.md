@@ -1,5 +1,5 @@
 ---
-name: building-testable-apps
+name: testable-apps-development
 description: Teaches seven headless-development rules — build every app as a pure, verifiable core library with a thin auto-generated UI, so the agent can test any feature by running commands with no screen. Use when the user asks to create a new application, module, feature, CLI, game, utility, or service, or says "create an app", "add a feature", "write a CLI/Tkinter/web app", "build a game/utility/service". Do not use for refactoring, fixing, or other changes to existing code unless the user explicitly asks to apply this skill — existing code is never rewritten to conform to these rules without an explicit request.
 ---
 
@@ -30,3 +30,6 @@ These rules govern code that is written **new**: a new app, a new module, a new 
    - Appearance change → before/after shots plus a verbal diff.
    - Checking "only the changed fragments" is not acceptance — cropping lives in untouched zones too.
    - A rule-6 shot does not cover the fact of a real window: the actual size and min-clamps at open time, the titlebar/chrome, the build config's ACL/permissions, third-party plugin defaults. What the shot cannot see stays on the live check.
+   - Between milestones, the whole-window demand is carried by composite screen goldens (whole-screen renders through the rule-6 sources, no window), and the live-check facts above are verified at milestones, not on every edit.
+
+**GUI companion.** For apps with a visual screen, the concrete pipeline for the visual halves of rules 6–7 — live component sources as the single design truth, offline acceptance via per-component × variant golden renders plus composite screens, the real window at milestones — is the `ui-development` skill. Read it together with this skill on any GUI app; nothing in it changes rules 1–6's logic layer or the text RPC.

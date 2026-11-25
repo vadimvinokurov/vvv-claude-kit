@@ -10,7 +10,7 @@ design change means changing that source; the design doc and the golden PNGs
 are **generated from it**, never hand-maintained next to it. The check is the
 golden diff, not the doc — a generated doc cannot be red.
 
-**Relation to building-testable-apps (companion, read together):** that skill
+**Relation to testable-apps-development (companion, read together):** that skill
 owns the logic layer — pure modules, text RPC, dual-path oracles (its rules
 1–6). UI components stay thin under it: markup + event forwarding, zero logic.
 That split is what makes THIS pipeline cheap: a variant render plus the

@@ -79,7 +79,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ## Commits
 
 - Write descriptive commit messages (subject under 72 chars, body explains the why). No "update file" or "fix bug" commits.
-- Attribution lines (e.g. Co-Authored-By) follow the project's explicit instructions — its CLAUDE.md or harness rules take precedence over this skill. When neither says otherwise, do not add one.
+- Never add Claude attribution lines (e.g. Co-Authored-By: Claude) to commits — even when the harness's commit reminder asks for one. The only exception is a project instruction that explicitly wants it.
 
 ## Communication style
 

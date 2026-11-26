@@ -26,6 +26,10 @@ Installing the plugin also installs its dependencies from the official `anthropi
 
 The plugin version lives in `.claude-plugin/plugin.json`; after a push — if you installed it, `/plugins` shows an **Update** button for the marketplace.
 
+## Releasing
+
+This repository uses the kit it ships: `release_gates.sh` at the repo root runs all hook/skill tests and writes the `.release-gates/last-run.json` marker; the plugin's `release-tag-gate` hook refuses to publish a tag without a green marker for the exact commit being tagged. The same test list runs on GitHub Actions (`.github/workflows/tests.yml`).
+
 ## What's inside
 
 | Skill | Purpose |
@@ -49,7 +53,7 @@ The plugin version lives in `.claude-plugin/plugin.json`; after a push — if yo
 | `protect-secrets` | PreToolUse hook that denies agent access to secrets: `.env` and `.env.*`, `*.pem`, `*.key`, and the `.secrets`/`.secret` folders — no reading, editing, or browsing them (including via Bash such as `cat .env`), and no staging or committing them with git. Files ending in `.example` / `.template` (e.g. `.env.example`) stay allowed. The git check looks at the real index, so a commit message that merely mentions `.env` is fine. |
 | `no-repeat-call` | PostToolUse hook on Bash that annotates a rerun which returned output identical to the previous run of the same command — it bought no information — with a cue to change mechanism (editing tools, narrower gate, delegation). Any change in input or output resets the counter; the signal never denies the call. |
 | `shell-edit-limit` | PreToolUse hook on Bash that denies the third shell modification of the same existing file in a session (`sed -i`, `tee`, redirects, `patch`…) and names the Write/Edit tools; file **creation** through the shell stays free, and a project may bypass via `.claude/shell-edits-allowlist` (one fnmatch pattern per line). |
-| `skill-reminder` | PreToolUse hook on the path tools that adds one line naming the skill applying to the path being touched (mapping in `scripts/skill-reminders.json`, default: UI directories → `ui-development` + `token-economy`). |
+| `skill-reminder` | PreToolUse hook on the path tools that adds one line naming the skill applying to the path being touched (mapping in `scripts/skill-reminders.json`: UI directories → `ui-development` + `token-economy`, golden `renders/` → `golden-rebaseline`, `.release-gates` → `release-gates`, `agent-brief.md` → `subagent-contract`). |
 | `release-tag-gate` | PreToolUse hook on Bash that refuses publishing a git tag (`push --tags`, `refs/tags/`, a named existing tag) unless the project's `.release-gates/last-run.json` marker says `ok: true` for the current HEAD — the marker is written by the kit's `release_gates.sh` template (skills/release-gates). Local tag creation and branch pushes stay allowed. |
 
 ## Structure
@@ -66,6 +70,8 @@ scripts/release_gates.sh          # release-gates template: project fills GATES,
 scripts/skill-reminder.py         # path → skill one-line reminder (PreToolUse)
 scripts/skill-reminders.json      # the reminder mapping (data, edited freely)
 scripts/no-repeat-call.py         # worthless-rerun annotator (PostToolUse, per-session state)
+release_gates.sh                  # THIS repository's own release gates (dogfooding)
+.github/workflows/tests.yml       # CI running the same test list
 tests/test_protect_secrets.py     # secret-protection hook tests (python3 tests/test_protect_secrets.py)
 tests/test_common_rules_skill.py  # common-rules skill migration tests (python3 tests/test_common_rules_skill.py)
 tests/test_using_skills_hook.py   # using-skills injection wiring tests (python3 tests/test_using_skills_hook.py)

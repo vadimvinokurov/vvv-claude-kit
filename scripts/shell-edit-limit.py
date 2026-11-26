@@ -40,11 +40,12 @@ DENIED_MESSAGE = (
 )
 
 # Commands whose non-flag operands are edited paths (best effort heuristic).
+# `touch` is deliberately absent: it only changes mtime, counting it as an
+# edit produced false denials.
 EDIT_COMMANDS = {
     "sed": re.compile(r"^sed\b"),
     "perl": re.compile(r"^perl\b"),
     "patch": re.compile(r"^patch\b"),
-    "touch": re.compile(r"^touch\b"),
     "truncate": re.compile(r"^truncate\b"),
 }
 
@@ -107,7 +108,7 @@ def extract_targets(segment, cwd):
         for i, t in enumerate(tokens):
             if t == "-e" and i + 1 < len(tokens):
                 targets.extend(x for x in tokens[i + 2:] if not x.startswith("-"))
-    elif tokens and tokens[0] in ("patch", "touch", "truncate"):
+    elif tokens and tokens[0] in ("patch", "truncate"):
         targets.extend(t for t in tokens[1:] if not t.startswith("-"))
     if tokens and tokens[0] == "tee":
         operands = [t for t in tokens[1:] if not t.startswith("-")]

@@ -1,6 +1,6 @@
 ---
 name: dual-path-oracle
-description: Use when writing or optimizing an algorithm that is non-obvious by design - the optimized version hides behavior changes that a plain implementation would not. Carries the obligations that make the optimization safe - the naive reference twin in the same changeset, an equality test on identical inputs that lives forever, and a recorded performance measurement.
+description: Use when writing or optimizing a non-obvious algorithm: the naive reference twin ships in the same changeset, a named equality test on identical inputs lives forever, the speedup is measured and recorded.
 ---
 
 # Dual Path Oracle — the naive twin beside every non-obvious optimization

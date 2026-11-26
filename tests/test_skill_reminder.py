@@ -41,8 +41,16 @@ class SkillReminderTests(unittest.TestCase):
         self.assertIsNone(decide({"pattern": "ui"}))
 
     def test_custom_mapping_entry(self):
+        # agent-brief is in the shipped mapping (subagent-contract).
         line = mod.reminder_for("/repo/docs/notes/agent-brief.md")
-        self.assertIsNone(line)  # not in the shipped mapping
+        self.assertIn("subagent-contract", line)
+
+    def test_new_reminder_entries(self):
+        self.assertIn("golden-rebaseline", mod.reminder_for("/app/renders/btn.png"))
+        self.assertIn("release-gates", mod.reminder_for("/repo/.release-gates/last-run.json"))
+
+    def test_unmapped_path_is_silent(self):
+        self.assertIsNone(mod.reminder_for("/repo/src/utils.py"))
 
 
 if __name__ == "__main__":

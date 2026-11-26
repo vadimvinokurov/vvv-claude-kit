@@ -1,0 +1,24 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run all hook/skill tests
+        run: |
+          python3 tests/test_protect_secrets.py
+          python3 tests/test_shell_edit_limit.py
+          python3 tests/test_release_tag_gate.py
+          python3 tests/test_skill_reminder.py
+          python3 tests/test_no_repeat_call.py
+          python3 tests/test_common_rules_skill.py
+          python3 tests/test_using_skills_hook.py

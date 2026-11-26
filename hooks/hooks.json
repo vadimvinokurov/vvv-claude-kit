@@ -5,7 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/using-skills/SKILL.md\""
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/using-skills/SKILL.md\"",
+            "timeout": 15
           }
         ]
       }
@@ -16,7 +17,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/protect-secrets.py\""
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/protect-secrets.py\"",
+            "timeout": 15
           }
         ]
       },
@@ -25,11 +27,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/shell-edit-limit.py\""
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/shell-edit-limit.py\"",
+            "timeout": 15
           },
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/release-tag-gate.py\""
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/release-tag-gate.py\"",
+            "timeout": 15
           }
         ]
       },
@@ -38,7 +42,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/skill-reminder.py\""
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/skill-reminder.py\"",
+            "timeout": 15
           }
         ]
       }
@@ -49,7 +54,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/no-repeat-call.py\""
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/no-repeat-call.py\"",
+            "timeout": 15
           }
         ]
       }

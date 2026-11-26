@@ -1,6 +1,6 @@
 ---
 name: testable-apps-development
-description: Teaches seven headless-development rules — build every app as a pure, verifiable core library with a thin auto-generated UI, so the agent can test any feature by running commands with no screen. Use when the user asks to create a new application, module, feature, CLI, game, utility, or service, or says "create an app", "add a feature", "write a CLI, web, or desktop app", "build a game/utility/service". Do not use for refactoring, fixing, or other changes to existing code unless the user explicitly asks to apply this skill — existing code is never rewritten to conform to these rules without an explicit request.
+description: Seven headless-development rules for NEW code — a new app, module, feature, CLI, game, utility or service ("build an app"): a pure verifiable core plus a thin auto-generated UI, every feature accepted by running commands with no screen. Do not use for refactoring or fixing existing code unless the user explicitly asks to apply it.
 ---
 
 # Building Testable Apps — 7 Rules of Headless Development

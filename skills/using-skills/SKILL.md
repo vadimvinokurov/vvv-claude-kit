@@ -32,6 +32,13 @@ the golden/oracle skills. Invoke superpowers skills for the process and this
 kit's skills for the discipline around them; neither list is optional when
 routed.
 
+**When the two layers disagree, resolve by subject, not by rank:** questions
+of *process* (whether to brainstorm, plan, or write a test first) go to
+superpowers; questions of *execution discipline* (budgets, gates schedule,
+reading, spawning economics) go to this kit. If a routing conflict cannot be
+resolved that way, prefer the skill that is more specific to the current tool
+or event, and state the choice in one line before proceeding.
+
 ## Hard routes (no judgment calls)
 
 - Every conversation → `/common-rules` — the operating rules (never fabricate, think before coding, simplicity, surgical changes, verified goals, commits, communication style, when to ask).

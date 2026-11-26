@@ -91,6 +91,14 @@ class ReleaseTagGateTests(unittest.TestCase):
             self._decide("npm test && git push origin v0.1.0"), "deny"
         )
 
+    def test_semicolon_chain_with_tag_push_is_gated(self):
+        self.assertEqual(
+            self._decide("cd other/repo; git push origin v0.1.0"), "deny"
+        )
+        self.assertEqual(
+            self._decide("make lint || git push origin v0.1.0"), "deny"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

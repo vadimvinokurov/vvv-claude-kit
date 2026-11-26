@@ -3,6 +3,18 @@
     {
       "segments": ["ui", "ui_design", "ui_components", "gui", "frontend"],
       "line": "Reminder: on UI paths the /ui-development skill (component style-guide pipeline, golden acceptance, image budget) and /token-economy §4 (gates schedule) apply."
+    },
+    {
+      "segments": ["renders", "goldens", "composites", "golden"],
+      "line": "Reminder: changed golden files fall under the /golden-rebaseline triage protocol (diff first, intended-vs-regression before any overwrite)."
+    },
+    {
+      "segments": [".release-gates", "release_gates.sh"],
+      "line": "Reminder: /release-gates — a tag publishes only after release_gates.sh ran green on the exact commit being tagged."
+    },
+    {
+      "segments": ["agent-brief.md"],
+      "line": "Reminder: /subagent-contract owns docs/notes/agent-brief.md — update it when new knowledge (a rule, a trap, a command) appears."
     }
   ]
 }

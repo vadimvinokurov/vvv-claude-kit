@@ -1,6 +1,6 @@
 ---
 name: golden-rebaseline
-description: Use when a comparison against a stored golden fails - component or composite screen PNGs, data goldens, snapshot goldens. Carries one triage protocol - read the diff before opening artifacts, classify intended vs regression, and the obligations that make a rebaseline auditable (before/after record per overwritten golden, the zero-diff-but-visible-change rule, and the no-before case for brand-new states).
+description: Use when a comparison against a stored golden fails — component or composite PNGs, data or snapshot goldens. One triage protocol: read the diff first, classify intended vs regression, and overwrite only with a before/after record.
 ---
 
 # Golden Rebaseline — one protocol for a failed comparison

@@ -15,13 +15,14 @@ Malformed input fails open silently. Tests: tests/test_release_tag_gate.py.
 
 import json
 import os
+import re
 import subprocess
 import sys
 
 MARKER = os.path.join(".release-gates", "last-run.json")
 DENIED_TEMPLATE = (
     "Tag publication without fresh green gates is refused (release-gates). "
-    "No successful gate run exists for the current commit {sha}. Run "
+    "No successful gate run exists for the current HEAD. Run "
     "`bash release_gates.sh` (configuring GATES in the project's copy of "
     "the script first, if it is still the template) and then publish."
 )
@@ -76,13 +77,16 @@ def decide(payload):
     if not isinstance(command, str):
         return None
     cwd = payload.get("cwd") or os.getcwd()
-    for segment in command.split("&&"):
-        tokens = [t for t in segment.replace(";", " ;").split() if t]
+    # Same segment splitting as protect-secrets.py: `&&`, `||`, `;`, `|` —
+    # so a push late in a `;`-chain is still recognized.
+    for segment in re.split(r"\|\||&&|[;|]", command):
+        tokens = segment.split()
         if tokens and tokens[0] == "git" and len(tokens) > 1 and tokens[1] == "push":
             if push_publishes_tags(tokens, cwd):
-                if gates_current(cwd) is None:
+                verdict = gates_current(cwd)
+                if verdict is None:
                     return None  # not a git repository — fail open
-                return "check" if gates_current(cwd) else "deny"
+                return "check" if verdict else "deny"
     return None
 
 
@@ -93,16 +97,13 @@ def main():
         return 0
     verdict = decide(payload)
     if verdict == "deny":
-        sha = (payload.get("cwd") and "") or ""
         print(
             json.dumps(
                 {
                     "hookSpecificOutput": {
                         "hookEventName": "PreToolUse",
                         "permissionDecision": "deny",
-                        "permissionDecisionReason": DENIED_TEMPLATE.replace(
-                            "{sha}", "in question"
-                        ),
+                        "permissionDecisionReason": DENIED_TEMPLATE,
                     }
                 }
             )

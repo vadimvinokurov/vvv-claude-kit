@@ -141,6 +141,17 @@ class EnginePathTests(unittest.TestCase):
         result = decide(self.mod, "Grep", {"pattern": r"\.env", "path": "/repo/work"})
         self.assertTrue(deny(result), result)
 
+    def test_grep_code_regex_naming_pem_key_is_allowed(self):
+        # A Grep pattern is a content regex, not a file selection: ordinary
+        # code searches for `api\.key` / `\.pem` strings must stay allowed.
+        for pat in (r"api\.key", r"\.pem", r"server\.key"):
+            result = decide(self.mod, "Grep", {"pattern": pat, "path": "/repo/work/src"})
+            self.assertFalse(deny(result), f"{pat}: {result}")
+
+    def test_grep_pattern_into_secrets_folder_is_denied(self):
+        result = decide(self.mod, "Grep", {"pattern": r"\.secret", "path": "/repo/work"})
+        self.assertTrue(deny(result), result)
+
     def test_grep_ordinary_search_is_allowed(self):
         result = decide(self.mod, "Grep", {"pattern": "TODO", "path": "/repo/work/src"})
         self.assertFalse(deny(result), result)
@@ -148,6 +159,12 @@ class EnginePathTests(unittest.TestCase):
     def test_glob_selecting_dotenv_files_is_denied(self):
         result = decide(self.mod, "Glob", {"pattern": "**/.env*", "path": "/repo/work"})
         self.assertTrue(deny(result), result)
+
+    def test_glob_selecting_pem_key_files_is_denied(self):
+        # Glob patterns are file selections — full check applies.
+        for pat in ("**/*.pem", "*.key"):
+            result = decide(self.mod, "Glob", {"pattern": pat, "path": "/repo/work"})
+            self.assertTrue(deny(result), f"{pat}: {result}")
 
     def test_glob_in_secrets_folder_is_denied(self):
         result = decide(self.mod, "Glob", {"pattern": "*", "path": "/repo/work/.secrets"})

@@ -1,3 +1,4 @@
 .claude-sandbox/
 .DS_Store
 __pycache__/
+.release-gates/

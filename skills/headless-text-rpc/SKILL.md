@@ -1,6 +1,6 @@
 ---
 name: headless-text-rpc
-description: Use when adding an interactive capability to a stateful app (web, desktop), wiring its automated checks, or when an agent verifies a UI by poking at markup instead of running commands. Carries the text-RPC obligations that make every screen feature checkable headless - one shared handler for button and command, typed coercion at one boundary, real-shaped command fakes, and snapshots readable by tests.
+description: Use when adding an interactive capability to a stateful app (web, desktop) or wiring its checks. The text-RPC obligations: one shared handler for button and command, typing at one boundary, real-shaped command fakes, and the state snapshot as the acceptance ground.
 ---
 
 # Headless Text RPC — every capability is checkable with no screen

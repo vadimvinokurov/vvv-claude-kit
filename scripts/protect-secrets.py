@@ -16,7 +16,12 @@ Rules: file-giving tools are denied by path; other Bash commands are
 denied when a token names a protected path; `git add/commit/rm/mv/cp/stash`
 are decided by the real git index (staged / dirty files), not by the
 command text, so a commit message mentioning `.env` stays allowed.
-Guards against ordinary agent behavior, not adversarial obfuscation.
+For Grep/Glob *pattern* inputs (a regex, not a path), the `.env` family
+and the secret dirs stay protected, but the loose `*.pem`/`*.key` suffix
+check applies only when the token looks like a file selection (contains a
+glob/path character) — a plain code regex like `api\.key` must not be
+blocked. Guards against ordinary agent behavior, not adversarial
+obfuscation.
 
 Tests: tests/test_protect_secrets.py (run `python3 tests/test_protect_secrets.py`).
 """
@@ -30,7 +35,10 @@ import sys
 PROTECTED_DIR_NAMES = {".secrets", ".secret"}
 SAFE_SUFFIXES = (".example", ".template")
 
-# Tools whose input is a path or pattern string.
+# Tools whose input is a path or pattern string. The `pattern` key of Grep
+# is a content regex (strict .env/dir check only, see
+# pattern_mentions_protected_name); Glob patterns select files and keep the
+# full check.
 TOOLS_WITH_STRING_INPUT = {
     "Read": ("file_path",),
     "Write": ("file_path",),
@@ -38,6 +46,7 @@ TOOLS_WITH_STRING_INPUT = {
     "Grep": ("path", "pattern"),
     "Glob": ("path", "pattern"),
 }
+STRICT_PATTERN_KEYS = {("Grep", "pattern")}
 
 # Bash segments containing these git subcommands are decided by scanning
 # the real index (git status --porcelain), not the command text — so a
@@ -97,6 +106,33 @@ def mentions_protected_name(text):
         for token in TOKEN_SPLIT.split(normalized)
         if token
     )
+
+
+def pattern_mentions_protected_name(text):
+    """Grep-pattern variant: a content regex, not a file path.
+
+    A Grep pattern does not select files, so the loose `*.pem`/`*.key`
+    suffix check does not apply (`api\\.key` as a code regex is ordinary
+    search). The `.env` family and the secret dirs stay absolute: a
+    pattern that names them is probing env/secret state. Glob patterns
+    are file selections and use the full check instead.
+    """
+    normalized = text.replace("\\", "")
+    return any(
+        pattern_segment_protected(segment)
+        for token in TOKEN_SPLIT.split(normalized)
+        if token
+        for segment in path_segments(token)
+    )
+
+
+def pattern_segment_protected(segment):
+    if segment in PROTECTED_DIR_NAMES:
+        return True
+    stem = segment.strip("*")
+    if stem == ".env" or stem.startswith(".env."):
+        return True
+    return False
 
 
 def parse_porcelain(status_output):
@@ -239,9 +275,14 @@ def decide(payload):
     if tool in TOOLS_WITH_STRING_INPUT:
         for key in TOOLS_WITH_STRING_INPUT[tool]:
             value = tool_input.get(key)
-            if isinstance(value, str) and (
-                is_protected_path(value) or mentions_protected_name(value)
-            ):
+            if not isinstance(value, str):
+                continue
+            if (tool, key) in STRICT_PATTERN_KEYS:
+                if pattern_mentions_protected_name(value):
+                    return denied(
+                        f"protected secrets path blocked: {key}={value}"
+                    )
+            elif is_protected_path(value) or mentions_protected_name(value):
                 return denied(f"protected secrets path blocked: {key}={value}")
     return allowed()
 

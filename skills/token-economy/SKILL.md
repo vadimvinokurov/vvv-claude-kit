@@ -1,6 +1,6 @@
 ---
 name: token-economy
-description: Use when planning or starting any non-trivial task - at every task boundary, before running test or build gates, before reading files or images into context, and whenever the same tool call fails or repeats three times in a row. Keeps context pressure and billed request count low across providers. Covers session shape, reading budget, edit discipline, and gates schedule. Use at session start alongside common-rules. When considering spawning a subagent, invoke the subagent-contract skill instead of this one's memory.
+description: Use when planning or starting any non-trivial task, at every task boundary, before running gates, before reading files or images, and when a tool call fails or repeats three times. Covers session shape, reading budget, edit discipline, gates schedule and budgets. For spawning, invoke subagent-contract.
 ---
 
 # Token Economy — requests and context (session rules)

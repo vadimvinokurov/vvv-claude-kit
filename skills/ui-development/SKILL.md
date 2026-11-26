@@ -1,6 +1,6 @@
 ---
 name: ui-development
-description: UI-visual pipeline for agent-developed stateful apps — live component sources are the single design truth (ui_design style guide with a generated design doc), visual acceptance runs on per-variant component golden PNGs plus composite screen goldens, and the real window is checked only at milestones. Use when adding or restyling a UI component or variant, changing design-system look, updating a design doc or mockup, or setting up/wiring UI visual tests (golden PNGs, showcase renders, composite screens).
+description: Use when adding or restyling a UI component or variant, changing the design-system look, updating a design doc or mockup, or wiring UI visual tests (golden PNGs, showcase renders, composite screens). Live component sources are the single design truth; acceptance on per-component and composite goldens; the real window only at milestones.
 ---
 
 # UI Development — component style-guide pipeline

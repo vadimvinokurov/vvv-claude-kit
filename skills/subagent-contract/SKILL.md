@@ -1,6 +1,6 @@
 ---
 name: subagent-contract
-description: Use when delegating - at the moment of deciding whether to spawn a subagent, when writing or reviewing a spawn prompt, while supervising a running agent, and when you yourself are the spawned agent executing such a task. Carries the spawn test (delegate vs stay inline), the five-field spawn contract, budgets and checkpoints for agents, waiting rules, the project agent-brief lifecycle (docs/notes/agent-brief.md), and what a subagent must report to be accepted. Invoke token-economy for session-side context rules.
+description: Use when delegating: deciding whether to spawn a subagent, writing or reviewing a spawn prompt, supervising a running agent, or when you are the spawned agent. Carries the spawn test, the five-field spawn prompt, budgets and checkpoints, the agent-brief lifecycle, and the report contract.
 ---
 
 # Subagent Contract — spawning, supervising, being the agent

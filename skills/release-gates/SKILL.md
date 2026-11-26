@@ -1,6 +1,6 @@
 ---
 name: release-gates
-description: Use before publishing any release tag or version marker in a project repository. Establishes that a release is published only after the project's release-gates script has run green on the exact commit being tagged - local checks equal CI checks, lists in memory are not gate lists, and a failed tag-push shows which script to run.
+description: Use before publishing a release tag or version marker: publish only after the project's release-gates script ran green on the exact commit being tagged; the gate list is the script, never memory.
 ---
 
 # Release Gates — a release is published by the script, not by memory

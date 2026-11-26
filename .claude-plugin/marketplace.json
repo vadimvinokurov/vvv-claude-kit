@@ -8,7 +8,7 @@
     "description": "Personal collection of skills and hooks for Claude Code",
     "version": "0.2.0"
   },
-  "allowCrossMarketplaceDependenciesOn": ["claude-plugins-official"],
+  "allowCrossMarketplaceDependenciesOn": ["anthropic-plugin-directory"],
   "plugins": [
     {
       "name": "vvv-claude-kit",

@@ -17,7 +17,7 @@ then in `/plugins` install **vvv-claude-kit** (or with the command):
 /plugin install vvv-claude-kit@vvv-claude-kit
 ```
 
-Installing the plugin also installs its dependencies from the official `claude-plugins-official` marketplace:
+Installing the plugin also installs its dependencies from the official `anthropic-plugin-directory` marketplace:
 
 - **superpowers** — disciplined skill-driven workflow
 - [web-design-guidelines](https://github.com/vercel-labs/agent-skills) — pre-ship web audit; not a plugin dependency, install with `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`

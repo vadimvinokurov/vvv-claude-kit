@@ -9,8 +9,9 @@ description: Use before publishing a release tag or version marker: publish only
 locally running the checks CI would run late: the CI caught breakage after
 publication, and the release was rebuilt three times in one day. A list of
 checks in the agent's head is not a list of checks. (This is the operating
-form of the same rule that gates tag publication mechanically — see
-`release-tag-gate` hook, `scripts/release_gates.sh`.)
+form of the same rule that gates tag publication mechanically — the
+project-local PreToolUse hook is installed by the `/release-tag-gate`
+skill.)
 
 ## Obligations
 
@@ -37,11 +38,11 @@ form of the same rule that gates tag publication mechanically — see
 
 ## Setup (once per project)
 
-Copy `scripts/release_gates.sh` from the kit into the project (e.g. the repo
-root or `scripts/`), fill the `GATES` array with the project's commands in
-release order, and make it executable. The kit's PreToolUse hook
-`release-tag-gate` then mechanically refuses tag publication until the script's
-marker is fresh.
+The `/release-tag-gate` installer skill creates the project's
+`release_gates.sh` (template ships in that skill), fills the `GATES` array
+with the project's commands in release order, and installs the project-local
+PreToolUse hook. From then on the hook mechanically refuses tag publication
+until the script's marker is fresh.
 
 ## Relation to the other skills
 

@@ -8,12 +8,9 @@ set -u
 
 GATES=(
   "python3 tests/test_protect_secrets.py"
-  "python3 tests/test_shell_edit_limit.py"
   "python3 tests/test_release_tag_gate.py"
-  "python3 tests/test_skill_reminder.py"
-  "python3 tests/test_no_repeat_call.py"
   "python3 tests/test_common_rules_skill.py"
-  "python3 tests/test_using_skills_hook.py"
+  "python3 tests/test_session_rules_hook.py"
 )
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd -P)"

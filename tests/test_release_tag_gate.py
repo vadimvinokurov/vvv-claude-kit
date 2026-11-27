@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-SCRIPT = REPO / "scripts" / "release-tag-gate.py"
+SCRIPT = REPO / "skills" / "release-tag-gate" / "references" / "release_tag_gate.py"
 
 spec = importlib.util.spec_from_file_location("release_tag_gate", str(SCRIPT))
 mod = importlib.util.module_from_spec(spec)

@@ -1,6 +1,6 @@
 ---
 name: token-economy
-description: Use when planning or starting any non-trivial task, at every task boundary, before running gates, before reading files or images, and when a tool call fails or repeats three times. Covers session shape, reading budget, edit discipline, gates schedule and budgets. For spawning, invoke subagent-contract.
+description: Session and delegation economics — injected into every session by the plugin hook. Invoke only if your context lacks it.
 ---
 
 # Token Economy — requests and context (session rules)
@@ -17,8 +17,8 @@ providers **1 request = 1 assistant turn** — a tool-call budget is a money bud
 ## 1. Session shape (the coordinator side)
 
 - Task boundary → fresh session (`/clear`) when the previous task is committed. A
-  task = a tracker item (bead id) + the brief pointer, not conversation memory.
-- Read the plan (bead + brief + the one spec section) before the first expensive
+  task = a tracker item (bead id) + the context it points to, not conversation memory.
+- Read the plan (bead + the one spec section) before the first expensive
   tool. **The plan holds pointers; the working tree is the truth when they diverge.**
   For a single fact: scoped grep / line-range read — cheaper than an agent, fresher
   than the plan. Delegate only real mining. Full-file read is right when the
@@ -74,11 +74,24 @@ providers **1 request = 1 assistant turn** — a tool-call budget is a money bud
 - If a usage endpoint exists, check `usage_usd` / `request_count` / cache share
   before changing methodology — measured beats estimated.
 - A failure loop is money (each wasted call = a full-context request). Kill the
-  third identical attempt mechanically: change mechanism — or delegate, which is
-  where `subagent-contract` comes in. If that skill cannot be invoked (not
-  installed yet), fall back to the brief's spawn template and include, at minimum:
-  file partition, exact gates with cwd, a call budget with checkpoint instruction,
-  and a report contract demanding gate outputs.
+  third identical attempt mechanically: change mechanism — or delegate, following
+  the spawn protocol in the next bullet.
+- A spawn is justified only when the work exceeds ~3–5 tool calls or one gate
+  cycle **and** the file boundary can be named up front. Not justified for small
+  tasks (a scoped lookup is cheaper than a spawn), nor when the task's context
+  lives only in this conversation — a handoff drops it: write it to the tracker
+  item first (the spawn becomes justified again) or stay inline.
+  A justified spawn prompt is pointers only (~15 lines is a smell) and carries,
+  at minimum: file partition, exact gates with cwd, a call budget with checkpoint
+  instruction, and a report contract demanding gate outputs — files changed,
+  commands with counts and exit codes; "all green" is not reporting — plus one
+  fixed first instruction to the agent: load `/vvv-claude-kit:subagent-rules`.
+- A delegation has two sides, each with its own rules. The spawned agent loads
+  `/vvv-claude-kit:subagent-rules` first (agent-side duties). The coordinator's
+  stop rule: an agent at ~2× its stated budget without a tracker checkpoint is
+  drifting — stop it, salvage its checkpoint notes, then decide: clearly
+  converging → one extension with a stated ceiling; not converging → decompose
+  and restart in halves. Persistence past drift is a process bug, not diligence.
 
 ## Rationalization table
 
@@ -93,7 +106,7 @@ providers **1 request = 1 assistant turn** — a tool-call budget is a money bud
 
 - The same tool called 3+ times consecutively on the same target (loop → new mechanism).
 - Mining docs/transcripts/many large files in the coordinator conversation
-  (delegate — invoke `subagent-contract` for the how).
+  (delegate — apply the §5 spawn protocol).
 - A full-suite run where a scoped file run would narrow the suspect, or a rerun that
   answers no real doubt.
 - A turn ending with no user-facing status while background work is pending (post

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""PreToolUse hook of the vvv-claude-kit plugin: tag publication needs fresh green gates.
+"""Project-local PreToolUse hook: tag publication needs fresh green gates.
 
-Wired via hooks/hooks.json for Bash. Per skills/release-gates/SKILL.md and
+Installed into the project by the /release-tag-gate skill
+(.claude/hooks/release_tag_gate.py, registered in the project's
+.claude/settings.json) for Bash calls. Per skills/release-gates/SKILL.md and
 report-04 section 2.4: publishing a tag is allowed only when the project's
 release-gates script ran successfully on the CURRENT commit — its marker
 file .release-gates/last-run.json (written by scripts/release_gates.sh)

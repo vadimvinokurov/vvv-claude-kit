@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""PreToolUse hook of the vvv-claude-kit plugin: blocks agent access to secrets.
+"""Project-local PreToolUse hook: blocks agent access to secrets.
 
-Wired up via hooks/hooks.json for every Read/Grep/Glob/Write/Edit/Bash call.
+Installed into the project by the /protect-secrets skill
+(.claude/hooks/protect_secrets.py, registered in the project's
+.claude/settings.json) for every Read/Grep/Glob/Write/Edit/Bash call.
 Reads the hook payload JSON on stdin; on denial prints a PreToolUse
 permission decision (exit 0), otherwise prints nothing and exits 0.
 Malformed input fails open silently.

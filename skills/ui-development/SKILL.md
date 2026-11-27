@@ -5,6 +5,13 @@ description: Use when adding or restyling a UI component or variant, changing th
 
 # UI Development — component style-guide pipeline
 
+## Entry check — the first decision
+
+Read from disk before anything else:
+- `ui_design/ui_components/` + the generated doc exist → read from "Workflow for a design change".
+- A hand-made design doc exists, but no components dir → read from "Infra state decides the entry point" → migrate.
+- Neither exists → read from "Infra state decides the entry point" → bootstrap.
+
 **Core idea:** a component's live source is its approved design, rendered. A
 design change means changing that source; the design doc and the golden PNGs
 are **generated from it**, never hand-maintained next to it. The check is the
@@ -57,10 +64,11 @@ ui_design/
    approval happens here, in task review — looking at the fresh render/doc
    **before** any golden is overwritten.
 4. **Run component goldens:** harness renders every variant and compares
-   against `renders/`. Red = triage: intended → overwrite the affected
-   renders and record before/after diff per affected render; regression →
-   fix the code. A 0.000% diff where the look visibly changed means the
-   changed thing is logic, not markup — go to the unit/RPC tests.
+   against `renders/`. Red = triage per the `/golden-rebaseline` protocol
+   (intended → overwrite the affected renders with a before/after record
+   per render; regression → fix the code). A 0.000% diff where the look
+   visibly changed means the changed thing is logic, not markup — go to
+   the unit/RPC tests.
 5. **Wiring check (optional, thin):** a component test asserting the
    element's event dispatches the action. Never test behavior here —
    behavior is the shared store/reducer, covered by the text-RPC skill
@@ -103,6 +111,9 @@ re-billed on every later turn of the session (documented here: 58 images,
    only when the question is genuinely visual and no text metric answers it).
 
 ## Traps (each one has bitten a real project)
+
+Golden overwrites are governed by the `/golden-rebaseline` protocol; the
+golden-related rows below are that protocol's failures in UI terms.
 
 | Trap | Rule |
 |---|---|

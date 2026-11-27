@@ -5,56 +5,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/using-skills/SKILL.md\"",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Read|Grep|Glob|Write|Edit|Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/protect-secrets.py\"",
-            "timeout": 15
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/shell-edit-limit.py\"",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/common-rules/SKILL.md\"",
             "timeout": 15
           },
           {
             "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/release-tag-gate.py\"",
-            "timeout": 15
-          }
-        ]
-      },
-      {
-        "matcher": "Read|Grep|Glob|Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/skill-reminder.py\"",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/no-repeat-call.py\"",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/skills/token-economy/SKILL.md\"",
             "timeout": 15
           }
         ]

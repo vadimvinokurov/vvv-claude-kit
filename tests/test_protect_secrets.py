@@ -1,6 +1,8 @@
 """Tests for the secrets-protection hook engine.
 
-The hook script lives at scripts/protect-secrets.py. It is a Claude Code
+The hook engine lives at skills/protect-secrets/references/protect_secrets.py
+(its project-local copy at .claude/hooks/protect_secrets.py is installed by
+the protect-secrets skill). It is a Claude Code
 PreToolUse hook: it reads the hook JSON payload from stdin and either
 allows the tool call (silently, exit 0) or denies it (JSON decision on
 stdout, exit 0).
@@ -22,8 +24,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-SCRIPT = REPO / "scripts" / "protect-secrets.py"
-HOOKS_JSON = REPO / "hooks" / "hooks.json"
+SCRIPT = REPO / "skills" / "protect-secrets" / "references" / "protect_secrets.py"
 
 
 def load_engine():
@@ -371,27 +372,24 @@ class ScriptEndToEndTests(unittest.TestCase):
 
 
 class WiringTests(unittest.TestCase):
-    """hooks/hooks.json points at the script with the right matcher."""
+    """The installer skill ships the engine and points at project settings."""
 
-    def test_hooks_json_registers_pretooluse_hook(self):
-        self.assertTrue(HOOKS_JSON.exists(), "hooks/hooks.json is missing")
-        data = json.loads(HOOKS_JSON.read_text())
-        groups = data.get("hooks", {}).get("PreToolUse", [])
-        matchers = [g.get("matcher", "") for g in groups]
-        joined = "|".join(matchers)
-        for tool in ("Read", "Grep", "Glob", "Write", "Edit", "Bash"):
-            self.assertIn(tool, joined)
-        for group in groups:
-            for hook in group.get("hooks", []):
-                cmd = hook.get("command", "")
-                self.assertIn("${CLAUDE_PLUGIN_ROOT}", cmd)
-                script_ref = cmd.replace('"', "").strip().replace(
-                    "${CLAUDE_PLUGIN_ROOT}", str(REPO)
-                )
-                self.assertTrue(
-                    Path(script_ref).exists(),
-                    f"hook command references a missing file: {cmd}",
-                )
+    SKILL_FILE = REPO / "skills" / "protect-secrets" / "SKILL.md"
+
+    def test_skill_and_engine_files_exist(self):
+        self.assertTrue(
+            self.SKILL_FILE.is_file(),
+            "skills/protect-secrets/SKILL.md is missing",
+        )
+        self.assertTrue(
+            SCRIPT.is_file(),
+            "skills/protect-secrets/references/protect_secrets.py is missing",
+        )
+
+    def test_skill_registers_project_local_hook(self):
+        text = self.SKILL_FILE.read_text()
+        self.assertIn(".claude/settings.json", text)
+        self.assertIn(".claude/hooks/protect_secrets.py", text)
 
 
 if __name__ == "__main__":
